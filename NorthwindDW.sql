@@ -1,9 +1,15 @@
-DROP DATABASE NorthwindDW
+
+USE master
 GO
+if exists (select * from sysdatabases where name='NorthwindDW')
+		drop database NorthwindDW
+GO
+
 CREATE DATABASE NorthwindDW
 GO
 
 USE NorthwindDW
+GO
 
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Fact')
   BEGIN
@@ -47,8 +53,6 @@ CREATE TABLE [Dim].[Customers] (
 	Country nvarchar(15) NULL,
 	Phone nvarchar(24) NULL,
 	Fax nvarchar(24) NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Customers PRIMARY KEY CLUSTERED (CustomerKey)
 )
@@ -73,8 +77,6 @@ CREATE TABLE [Dim].[Employees] (
 	Extension nvarchar(4) NULL,
 	Notes ntext NULL,
 	ReportsTo int NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Employees PRIMARY KEY CLUSTERED (EmployeeKey)
 )
@@ -91,8 +93,6 @@ CREATE TABLE [Dim].[Territories] (
 	TerritoryAlternateKey nvarchar(20) NOT NULL,
 	TerritoryDescription nchar(50) NOT NULL,
 	RegionKey int NOT NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Territories PRIMARY KEY CLUSTERED (TerritoryKey)
 )
@@ -103,8 +103,6 @@ CREATE TABLE [Dim].[Regions] (
 	RegionKey int IDENTITY(1,1) NOT NULL,
 	RegionAlternateKey int NOT NULL,
 	RegionDescription nchar(50) NOT NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Regions PRIMARY KEY CLUSTERED (RegionKey)
 )
@@ -123,8 +121,6 @@ CREATE TABLE [Dim].[Products] (
 	UnitsOnOrder smallint NULL,
 	ReorderLevel smallint NULL,
 	Discontinued bit NOT NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Products PRIMARY KEY CLUSTERED (ProductKey)
 )
@@ -136,8 +132,6 @@ CREATE TABLE [Dim].[Categories] (
 	CategoryAlternateKey int NOT NULL,
 	CategoryName nvarchar(15) NOT NULL,
 	Description ntext NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Categories PRIMARY KEY CLUSTERED (CategoryKey)
 )
@@ -157,8 +151,6 @@ CREATE TABLE [Dim].[Suppliers] (
 	Phone nvarchar(24) NULL,
 	Fax nvarchar(24) NULL,
 	HomePage ntext NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Suppliers PRIMARY KEY CLUSTERED (SupplierKey)
 )
@@ -168,7 +160,9 @@ DROP TABLE IF EXISTS [Dim].[Date]
 CREATE TABLE [Dim].[Date] (
 	DateKey int NOT NULL UNIQUE,
 	FullDateKey Date NOT NULL,
-	DayNumber int NOT NULL,
+	DayNumberOfMonth int NOT NULL,
+	DayNumberOfWeek int NOT NULL,
+	DayNumberOfYear int NOT NULL,
 	MonthNumber int NOT NULL,
 	YearNumber int NOT NULL,
 	CONSTRAINT PK_Date PRIMARY KEY CLUSTERED (DateKey)
@@ -184,8 +178,6 @@ CREATE TABLE [Dim].[Ship] (
 	PostalCode nvarchar(10) NULL,
 	Country nvarchar(15) NULL,
 	ShipperKey int NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Ship PRIMARY KEY CLUSTERED (ShipKey)
 )
@@ -195,8 +187,6 @@ CREATE TABLE [Dim].[Shippers] (
 	ShipperKey int IDENTITY(1,1) NOT NULL,
 	CompanyName nvarchar(40) NOT NULL,
 	Phone nvarchar(24) NULL,
-	CreatedDate datetime NULL DEFAULT GETDATE(),
-	ModifiedDate datetime NULL,
 	Status bit NOT NULL DEFAULT 0,
 	CONSTRAINT PK_Shippers PRIMARY KEY CLUSTERED (ShipperKey)
 )
@@ -268,3 +258,62 @@ ALTER TABLE [Dim].[Ship]
    ADD CONSTRAINT FK_Ship_Shipper FOREIGN KEY (ShipperKey)
       REFERENCES [Dim].[Shippers] (ShipperKey)
 ;
+
+/**** Dim.Date veri ekleme ****/
+DECLARE @i int;
+DECLARE @MinDateFromDB int;
+DECLARE @MaxDateFromDB int;
+DECLARE @MinDate date;
+DECLARE @MaxDate date;
+DECLARE @Date date;
+-- For Insert
+DECLARE @DateKey int;
+DECLARE @FullDateKey date;
+DECLARE @DayNumberOfWeek int;
+DECLARE @DayNumberOfMonth int;
+DECLARE @DayNumberOfYear int;
+DECLARE @MonthNumber int;
+DECLARE @YearNumber int;
+
+-- Minimum va Maximum date'ler çekilir.
+SET @MaxDateFromDB = (SELECT (DATEPART(YEAR, max(RequiredDate)) + 1) FROM Northwind.dbo.Orders)
+SET @MinDateFromDB = (SELECT (DATEPART(YEAR, min(OrderDate)) - 1) FROM Northwind.dbo.Orders)
+
+-- MaxDate ile MinDate arasındaki farkın günü alınır. +- 1 ile hesaplanır. Artık yıl +1 ile hesaplanmıştır.
+SET @i = ((@MaxDateFromDB - @MinDateFromDB) * 365) + 1
+
+-- Base date oluşturulur, üzerinden işlem yapılacak.
+SET @MinDate = DATEFROMPARTS(@MinDateFromDB, 1, 1)
+
+WHILE @i > 0
+BEGIN
+	SET @DateKey = convert(int, replace(convert(varchar(20), @MinDate), '-',''));
+	SET @FullDateKey = @MinDate;
+	SET @DayNumberOfWeek = DATEPART(WEEKDAY, @MinDate);
+	SET @DayNumberOfMonth = DATEPART(DAY, @MinDate);
+	SET @DayNumberOfYear = DATEPART(DAYOFYEAR, @MinDate);
+	SET @MonthNumber = DATEPART(MONTH, @MinDate);
+	SET @YearNumber = DATEPART(YEAR, @MinDate);
+
+	INSERT INTO NorthwindDW.Dim.Date
+           (DateKey
+           ,FullDateKey
+           ,DayNumberOfMonth
+           ,DayNumberOfWeek
+           ,DayNumberOfYear
+           ,MonthNumber
+           ,YearNumber)
+     VALUES
+           (@DateKey
+           ,@FullDateKey
+           ,@DayNumberOfMonth
+           ,@DayNumberOfWeek
+           ,@DayNumberOfYear
+           ,@MonthNumber
+           ,@YearNumber)
+		
+
+	SET @MinDate = DATEADD(DAY, 1, @MinDate)
+    SET @i = @i - 1
+END
+

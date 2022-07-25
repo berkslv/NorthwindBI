@@ -333,6 +333,7 @@ GO
 GO
 
 CREATE TABLE "Order Details" (
+	"OrderDetailID" "int" IDENTITY (1, 1) NOT NULL ,
 	"OrderID" "int" NOT NULL ,
 	"ProductID" "int" NOT NULL ,
 	"UnitPrice" "money" NOT NULL CONSTRAINT "DF_Order_Details_UnitPrice" DEFAULT (0),
@@ -9106,19 +9107,6 @@ GO
 
 
 /* The follwing adds tables to the Northwind database */
-
-
-CREATE TABLE [dbo].[CustomerCustomerDemo] 
-	([CustomerID] nchar (5) NOT NULL,
-	[CustomerTypeID] [nchar] (10) NOT NULL,
-) ON [PRIMARY] 
-GO
-
-CREATE TABLE [dbo].[CustomerDemographics] 
-	([CustomerTypeID] [nchar] (10) NOT NULL ,
-	[CustomerDesc] [ntext] NULL ,
-)  ON [PRIMARY] 
-GO		
 	
 CREATE TABLE [dbo].[Region] 
 	( [RegionID] [int] NOT NULL ,
@@ -9134,7 +9122,8 @@ CREATE TABLE [dbo].[Territories]
 GO
 
 CREATE TABLE [dbo].[EmployeeTerritories] 
-	([EmployeeID] [int] NOT NULL,
+	([EmployeeTerritoryID] [int] IDENTITY (1, 1) NOT NULL,
+	[EmployeeID] [int] NOT NULL,
 	[TerritoryID] [nvarchar] (20) NOT NULL ,
 ) ON [PRIMARY]
 
@@ -9255,39 +9244,6 @@ GO
 
 
 --  The following adds constraints to the Northwind database
-
-ALTER TABLE CustomerCustomerDemo
-	ADD CONSTRAINT [PK_CustomerCustomerDemo] PRIMARY KEY  NONCLUSTERED 
-	(
-		[CustomerID],
-		[CustomerTypeID]
-	) ON [PRIMARY]
-GO
-
-ALTER TABLE CustomerDemographics
-	ADD CONSTRAINT [PK_CustomerDemographics] PRIMARY KEY  NONCLUSTERED 
-	(
-		[CustomerTypeID]
-	) ON [PRIMARY]
-GO
-
-ALTER TABLE CustomerCustomerDemo
-	ADD CONSTRAINT [FK_CustomerCustomerDemo] FOREIGN KEY 
-	(
-		[CustomerTypeID]
-	) REFERENCES [dbo].[CustomerDemographics] (
-		[CustomerTypeID]
-	)
-GO
-
-ALTER TABLE CustomerCustomerDemo
-	ADD CONSTRAINT [FK_CustomerCustomerDemo_Customers] FOREIGN KEY
-	(
-		[CustomerID]
-	) REFERENCES [dbo].[Customers] (
-		[CustomerID]
-	)
-GO
 
 ALTER TABLE Region
 	ADD CONSTRAINT [PK_Region] PRIMARY KEY  NONCLUSTERED 
@@ -9505,3 +9461,12 @@ CREATE TRIGGER CategoriesAfterUpdateSetModifiedDate ON Categories
     END
 GO
 
+CREATE TABLE [dbo].[cdc_states] 
+ ([name] [nvarchar](256) NOT NULL, 
+ [state] [nvarchar](256) NOT NULL) ON [PRIMARY]
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [cdc_states_name] ON 
+ [dbo].[cdc_states] 
+ ( [name] ASC ) 
+ WITH (PAD_INDEX  = OFF) ON [PRIMARY]
+GO

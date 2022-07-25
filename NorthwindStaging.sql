@@ -1,6 +1,12 @@
-DROP DATABASE NorthwindStaging
+USE master
+GO
+
+if exists (select * from sysdatabases where name='NorthwindStaging')
+		drop database NorthwindStaging
+GO
 
 CREATE DATABASE NorthwindStaging
+GO
 
 USE [NorthwindStaging]
 GO
@@ -18,6 +24,7 @@ GO
         [RegionID] [int] NOT NULL,
         [RegionDescription] [nchar](50) NOT NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Region] PRIMARY KEY NONCLUSTERED 
     (
         [RegionID] ASC
@@ -38,6 +45,7 @@ GO
         [TerritoryDescription] [nchar](50) NOT NULL,
         [RegionID] [int] NOT NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Territories] PRIMARY KEY NONCLUSTERED 
     (
         [TerritoryID] ASC
@@ -57,6 +65,7 @@ GO
         [CompanyName] [nvarchar](40) NOT NULL,
         [Phone] [nvarchar](24) NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Shippers] PRIMARY KEY CLUSTERED 
     (
         [ShipperID] ASC
@@ -84,6 +93,7 @@ GO
         [Phone] [nvarchar](24) NULL,
         [Fax] [nvarchar](24) NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Customers] PRIMARY KEY CLUSTERED 
     (
         [CustomerID] ASC
@@ -104,6 +114,7 @@ GO
         [Description] [ntext] NULL,
         [Picture] [image] NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
     (
         [CategoryID] ASC
@@ -133,6 +144,7 @@ GO
         [Fax] [nvarchar](24) NULL,
         [HomePage] [ntext] NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Suppliers] PRIMARY KEY CLUSTERED 
     (
         [SupplierID] ASC
@@ -148,9 +160,11 @@ GO
     GO
 
     CREATE TABLE [dbo].[EmployeeTerritories](
+	    [EmployeeTerritoryID] [int] IDENTITY (1, 1) NOT NULL,
         [EmployeeID] [int] NOT NULL,
         [TerritoryID] [nvarchar](20) NOT NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_EmployeeTerritories] PRIMARY KEY NONCLUSTERED 
     (
         [EmployeeID] ASC,
@@ -186,6 +200,7 @@ GO
         [ReportsTo] [int] NULL,
         [PhotoPath] [nvarchar](255) NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
     (
         [EmployeeID] ASC
@@ -212,6 +227,7 @@ GO
         [ReorderLevel] [smallint] NULL,
         [Discontinued] [bit] NOT NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
     (
         [ProductID] ASC
@@ -227,12 +243,14 @@ GO
     GO
 
     CREATE TABLE [dbo].[Order Details](
+	    [OrderDetailID] [int] IDENTITY (1, 1) NOT NULL,
         [OrderID] [int] NOT NULL,
         [ProductID] [int] NOT NULL,
         [UnitPrice] [money] NOT NULL,
         [Quantity] [smallint] NOT NULL,
         [Discount] [real] NOT NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Order_Details] PRIMARY KEY CLUSTERED 
     (
         [OrderID] ASC,
@@ -264,6 +282,7 @@ GO
         [ShipPostalCode] [nvarchar](10) NULL,
         [ShipCountry] [nvarchar](15) NULL,
         [ModifiedDate] [DateTime] NOT NULL DEFAULT GETDATE(),
+        [IsDeleted] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED 
     (
         [OrderID] ASC
