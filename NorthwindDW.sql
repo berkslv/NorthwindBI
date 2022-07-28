@@ -23,11 +23,12 @@ IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Dim')
 
 DROP TABLE IF EXISTS [Fact].[Orders]
 CREATE TABLE [Fact].[Orders] (
-	OrderKey int IDENTITY(1,1) NOT NULL,
-	CustomerKey nchar(5) NULL,
+	OrderKey int UNIQUE NOT NULL,
+	CustomerKey [nchar](5) NULL,
 	EmployeeKey int NULL,
 	ProductKey int NULL,
 	ShipKey int NULL,
+	ShipperKey int NULL,
 	OrderDateKey int NULL,
 	RequiredDateKey int NULL,
 	ShippedDateKey int NULL,
@@ -36,13 +37,13 @@ CREATE TABLE [Fact].[Orders] (
 	Discount real NULL,
 	Freight money NULL,
 	Total money NULL,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Orders PRIMARY KEY CLUSTERED (OrderKey)
 ); 
 
 DROP TABLE IF EXISTS [Dim].[Customers]
 CREATE TABLE [Dim].[Customers] (
-	CustomerKey nchar(5) NOT NULL,
-	CustomerAlternateKey nchar(5) NOT NULL,
+	CustomerKey [nchar](5) UNIQUE NOT NULL,
 	CompanyName nvarchar(40) NOT NULL,
 	ContactName nvarchar(30) NULL,
 	ContactTitle nvarchar(30) NULL,
@@ -53,15 +54,14 @@ CREATE TABLE [Dim].[Customers] (
 	Country nvarchar(15) NULL,
 	Phone nvarchar(24) NULL,
 	Fax nvarchar(24) NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Customers PRIMARY KEY CLUSTERED (CustomerKey)
 )
 
 
 DROP TABLE IF EXISTS [Dim].[Employees]
 CREATE TABLE [Dim].[Employees] (
-	EmployeeKey int IDENTITY(1,1) NOT NULL,
-	EmployeeAlternateKey int NOT NULL,
+	EmployeeKey int UNIQUE NOT NULL,
 	LastName nvarchar(20) NOT NULL,
 	FirstName nvarchar(10) NOT NULL,
 	Title nvarchar(30) NULL,
@@ -77,33 +77,33 @@ CREATE TABLE [Dim].[Employees] (
 	Extension nvarchar(4) NULL,
 	Notes ntext NULL,
 	ReportsTo int NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Employees PRIMARY KEY CLUSTERED (EmployeeKey)
 )
 
 DROP TABLE IF EXISTS [Dim].[EmployeeTerritories]
 CREATE TABLE [Dim].[EmployeeTerritories] (
+	EmployeeTerritoryKey int UNIQUE NOT NULL,
 	EmployeeKey int NOT NULL,
-	TerritoryKey nvarchar(20) NOT NULL,
+	TerritoryKey [nvarchar](20) NOT NULL,
+	ModifiedDate DateTime NOT NULL,
 )
 
 DROP TABLE IF EXISTS [Dim].[Territories]
 CREATE TABLE [Dim].[Territories] (
-	TerritoryKey nvarchar(20) NOT NULL,
-	TerritoryAlternateKey nvarchar(20) NOT NULL,
+	TerritoryKey [nvarchar](20) UNIQUE NOT NULL,
 	TerritoryDescription nchar(50) NOT NULL,
 	RegionKey int NOT NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Territories PRIMARY KEY CLUSTERED (TerritoryKey)
 )
 
 
 DROP TABLE IF EXISTS [Dim].[Regions]
 CREATE TABLE [Dim].[Regions] (
-	RegionKey int IDENTITY(1,1) NOT NULL,
-	RegionAlternateKey int NOT NULL,
+	RegionKey int UNIQUE NOT NULL,
 	RegionDescription nchar(50) NOT NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Regions PRIMARY KEY CLUSTERED (RegionKey)
 )
 
@@ -121,25 +121,25 @@ CREATE TABLE [Dim].[Products] (
 	UnitsOnOrder smallint NULL,
 	ReorderLevel smallint NULL,
 	Discontinued bit NOT NULL,
-	Status bit NOT NULL DEFAULT 0,
+	StartDate datetime NOT NULL,
+	EndDate datetime NOT NULL DEFAULT DATETIMEFROMPARTS(9999,12,31,23,59,59,0),
+	Status bit NOT NULL DEFAULT 1,
 	CONSTRAINT PK_Products PRIMARY KEY CLUSTERED (ProductKey)
 )
 
 
 DROP TABLE IF EXISTS [Dim].[Categories]
 CREATE TABLE [Dim].[Categories] (
-	CategoryKey int IDENTITY(1,1) NOT NULL,
-	CategoryAlternateKey int NOT NULL,
+	CategoryKey int UNIQUE NOT NULL,
 	CategoryName nvarchar(15) NOT NULL,
 	Description ntext NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Categories PRIMARY KEY CLUSTERED (CategoryKey)
 )
 
 DROP TABLE IF EXISTS [Dim].[Suppliers]
 CREATE TABLE [Dim].[Suppliers] (
-	SupplierKey int IDENTITY(1,1) NOT NULL,
-	SupplierAlternateKey int NOT NULL,
+	SupplierKey int UNIQUE NOT NULL,
 	CompanyName nvarchar(40) NOT NULL,
 	ContactName nvarchar(30) NULL,
 	ContactTitle nvarchar(30) NULL,
@@ -151,7 +151,7 @@ CREATE TABLE [Dim].[Suppliers] (
 	Phone nvarchar(24) NULL,
 	Fax nvarchar(24) NULL,
 	HomePage ntext NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Suppliers PRIMARY KEY CLUSTERED (SupplierKey)
 )
 
@@ -177,17 +177,16 @@ CREATE TABLE [Dim].[Ship] (
 	Region nvarchar(15) NULL,
 	PostalCode nvarchar(10) NULL,
 	Country nvarchar(15) NULL,
-	ShipperKey int NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Ship PRIMARY KEY CLUSTERED (ShipKey)
 )
 
 DROP TABLE IF EXISTS [Dim].[Shippers]
 CREATE TABLE [Dim].[Shippers] (
-	ShipperKey int IDENTITY(1,1) NOT NULL,
+	ShipperKey int UNIQUE NOT NULL,
 	CompanyName nvarchar(40) NOT NULL,
 	Phone nvarchar(24) NULL,
-	Status bit NOT NULL DEFAULT 0,
+	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Shippers PRIMARY KEY CLUSTERED (ShipperKey)
 )
 GO
@@ -212,6 +211,11 @@ ALTER TABLE [Fact].[Orders]
 ALTER TABLE [Fact].[Orders]
    ADD CONSTRAINT FK_Orders_Ship FOREIGN KEY (ShipKey)
       REFERENCES [Dim].[Ship] (ShipKey)
+;
+
+ALTER TABLE [Fact].[Orders]
+   ADD CONSTRAINT FK_Orders_Shipper FOREIGN KEY (ShipperKey)
+      REFERENCES [Dim].[Shippers] (ShipperKey)
 ;
 
 ALTER TABLE [Fact].[Orders]
@@ -254,10 +258,6 @@ ALTER TABLE [Dim].[Products]
       REFERENCES [Dim].[Categories] (CategoryKey)
 ;
 
-ALTER TABLE [Dim].[Ship]
-   ADD CONSTRAINT FK_Ship_Shipper FOREIGN KEY (ShipperKey)
-      REFERENCES [Dim].[Shippers] (ShipperKey)
-;
 
 /**** Dim.Date veri ekleme ****/
 DECLARE @i int;
