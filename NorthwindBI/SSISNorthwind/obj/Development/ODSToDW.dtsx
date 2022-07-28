@@ -1,18 +1,18 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="7/7/2022 3:02:02 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DESKTOP-Q3M17BJ"
   DTS:CreatorName="DESKTOP-Q3M17BJ\berks_9484iah"
-  DTS:DTSID="{7A889968-E854-4940-B125-372F55DB1AF1}"
+  DTS:DTSID="{3DEAD396-4E17-4CFE-9965-F99E23C1EC9F}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.521.0"
   DTS:LocaleID="1055"
-  DTS:ObjectName="Package1"
+  DTS:ObjectName="ODSToDW"
   DTS:PackageType="5"
-  DTS:VersionBuild="42"
-  DTS:VersionGUID="{F2C2A647-937C-414E-8788-DC06FB4C3719}">
+  DTS:VersionBuild="43"
+  DTS:VersionGUID="{2AE22BF5-134F-4DC6-9300-F0A037F1137D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -16133,13 +16133,13 @@ ELSE
           Id="Package\EmployeeTerritories"
           TopLeft="41.6294636653871,725.445228077955" />
         <NodeLayout
-          Size="154.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update"
-          TopLeft="62.2321367144053,21.9761858768406" />
-        <NodeLayout
           Size="109.333333333334,42.6666666666667"
           Id="Package\Fact Orders\Delete"
           TopLeft="86.791659989084,94.5166614479817" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update"
+          TopLeft="62.2321367144053,21.9761858768406" />
         <EdgeLayout
           Id="Package\Fact Orders.PrecedenceConstraints[Constraint]"
           TopLeft="140.511898351745,64.6428525435073">
@@ -17628,6 +17628,108 @@ ELSE
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
+    design-time-name="Package\Fact Orders\Delete">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="134,42.6666666666667"
+          Id="Package\Fact Orders\Delete\Fact Orders"
+          TopLeft="98.5714285714285,32.1428571428572" />
+        <NodeLayout
+          Size="122.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Delete\Lookup 1"
+          TopLeft="105,115.714285714286" />
+        <EdgeLayout
+          Id="Package\Fact Orders\Delete.Paths[OLE DB Source Output]"
+          TopLeft="165.952380952381,74.8095238095239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.9047619047619"
+              Start="0,0"
+              End="0,33.4047619047619">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.4047619047619" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="109.333333333334,42.6666666666667"
+          Id="Package\Fact Orders\Delete\Delete"
+          TopLeft="108.571428571429,207.857142857143" />
+        <EdgeLayout
+          Id="Package\Fact Orders\Delete.Paths[Lookup No Match Output]"
+          TopLeft="164.785714285714,158.380952380952">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.4761904761905"
+              Start="0,0"
+              End="0,41.9761904761905">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.9761904761905" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.1834077380952,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Orders\Delete\Lookup 1">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Order Details]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Orders\Delete\Fact Orders">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
     design-time-name="Package\Fact Orders\Insert &amp; Update">
     <LayoutInfo>
       <GraphLayout
@@ -17913,14 +18015,6 @@ ELSE
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Fact Orders\Insert &amp; Update\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Fact Orders\Insert &amp; Update\Insert Ship">
     <Properties>
       <Property>
@@ -17951,6 +18045,14 @@ ELSE
         <Value
           type="q4:string">0</Value>
       </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Orders\Insert &amp; Update\OLE DB Source">
+    <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -19317,108 +19419,6 @@ ELSE
   <PipelineComponentMetadata
     design-time-name="Package\Territory\Insert &amp; Update\ODS Territory">
     <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Fact Orders\Delete">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="134,42.6666666666667"
-          Id="Package\Fact Orders\Delete\Fact Orders"
-          TopLeft="98.5714285714285,32.1428571428572" />
-        <NodeLayout
-          Size="122.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Delete\Lookup 1"
-          TopLeft="105,115.714285714286" />
-        <EdgeLayout
-          Id="Package\Fact Orders\Delete.Paths[OLE DB Source Output]"
-          TopLeft="165.952380952381,74.8095238095239">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,40.9047619047619"
-              Start="0,0"
-              End="0,33.4047619047619">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.4047619047619" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="109.333333333334,42.6666666666667"
-          Id="Package\Fact Orders\Delete\Delete"
-          TopLeft="108.571428571429,207.857142857143" />
-        <EdgeLayout
-          Id="Package\Fact Orders\Delete.Paths[Lookup No Match Output]"
-          TopLeft="164.785714285714,158.380952380952">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,49.4761904761905"
-              Start="0,0"
-              End="0,41.9761904761905">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.9761904761905" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,15.1834077380952,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Fact Orders\Delete\Fact Orders">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Fact Orders\Delete\Lookup 1">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[Order Details]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>

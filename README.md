@@ -1,14 +1,22 @@
 # Northwind BI
 
-Bu repo, Northwind DB kullanılarak geliştirilien Business Intelligence çözümlerini içerir. Araç seti olarak Microsoftun araçları olan SQL Server, SSIS, SSAS, SSRS ve Power BI kullanılır.
+Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sonra iş zekası süreçlerini uygulamak için geliştirilmiştir. Araç seti olarak Microsoftun araçları olan SQL Server, SSIS, SSAS, SSRS ve Power BI kullanılır.
+
+Üç ana aşamada projeyi tamamlayacağız. İlk olarak Data warehouse ve ODS katmanlarının şemaları oluşturulur, her katmanın oluşturma scriptleri ana dizinde bulunabilir, ikinci adımda bu şemalar kaynak veritabanımızdan ETL süreci ile doldurulur. Son adımda ise veri ambarımıza bağladığımız SSAS ve ona bağladığımız Power BI araçlarımız ile rapor oluşturulur. Adım adım projenin geliştirilme aşamaları aşağıda yer almaktadır.
 
 # Süreç
 
 ## Northiwnd veritabanı oluşturulur.
 
-Northwind veritabanının aslında UpdatedDate gibi bir alan yok, fakat SSIS üzerinden güncellenen verileri kontrol etmek için bunun gibi bir alana ihtiyaç var. Bu sebeple DB oluşturma scripti olan [Northwind.sql](./Northwind.sql) üzerinde asıl Northwind scripti dışında bazı eklemeler yaptım.
+Northwind sektörde çok sık kullanılan bir örnek veritabanı olduğu için ve şemalarıda görece basit olduğu için tercih edildi. Ancak DW geliştirmek için ETL sürecimizde kullanacağımız CDC (Incremental Load) sürecimiz için her tabloya `ModifiedDate` alanı eklendi ve tablo üzerinde yapılan güncelleme işlemlerinde bu alanı güncelleyecek triggerlar oluşturuldu. 
 
-İlk olarak Her tablo için UpdatedDate (DateTime) alanı ekledim, daha sonra tablo üzerinde güncelleme yapıldığında otomatik olarak bu alanı güncellemesi için Trigger oluşturdum. Bir tablo için örnek aşağıdaki gibidir.
+<details>
+  <summary>CDC nedir? </summary>
+  
+	Bir örnek üzerinden anlatacak olursak ETL paketleri genel olarak her gece 00:00 da çalıştırılır ve o güne ait verileri DW içerisine aktarır. Order tablosu gibi transaction barındıran tablolarda veri adeti aşırı büyüklüklere ulaşabileceği için DW üzerinde tüm verileri TRUNCATE et daha sonra tüm verileri tekrar aktar gibi bir mantık yürütemeyiz. Bunun yerine sadece o gün eklenen, güncellenen ve silinen satırlar işleme alınmalıdır. Bunun için SQL Server kendi CDC çözümünü barındırsada biz geliştirici olarak kendi logic'iğimizi implemente edebiliriz. Bunun için tarif ettiğim gibi `ModifiedDate` alanı eklenir, bu alan güncellemelerde güncellenecek şekilde trigger ile tetiklenir, daha sonra ilk hedefimiz olacak olan ODS (Operational Data Store) katmanındaki en güncel veriden sonraki veriler Northwind katmanından çekilerek çok daha performanslı bir süreç işletilir. Bu tarif edilen `ModifiedDate` güncellemesi aşağıdaki gibi yapılabilir.
+</details>
+
+<br/>
 
 ```sql
 ALTER TABLE Products
@@ -27,43 +35,184 @@ CREATE TRIGGER ProductsAfterUpdateSetModifiedDate ON Products
 GO
 ```
 
-Ek olarak Primary key içermeyen Order Details ve Employee Territories tablolarına PK eklenir, bunu SSIS içerisinde incremental load yapabilmek için ekliyoruz.
+Ek olarak Primary key içermeyen Order Details ve Employee Territories tablolarına PK ekliyoruz çünkü PK olmadan silme ve güncellemede sıkıntı çekiyoruz.
 
-## NorthwindStaging veritabanı oluşturulur.
 
-NorthwindStaging veritabanı, Olası NorthwindDW veritabanının olası şeması dikkate alınarak oluşturuldu. Northwind veritabanındaki oluşturma scriptlerinden büyük ölçüde faydalanıldı. Gerekli oluşturma scriptini [NorthwindStaging.sql](./NorthwindStaging.sql) içerisinde bulabilirsiniz.
+## NorthwindODS veritabanı oluşturulur.
 
-## Northwind to NorthwindStaging için SSIS paketi oluşturulur.
+<details>
+  <summary>ODS katmanı nedir? </summary>
+  
+	ODS katmanımız üzerinde kaynak veritabanı üzerinden çekilen veriler DW üzerine aktarılmadan önce tutulduğu operasyonel katmandır. Bu katmana analiz işlemlerinde kullanılmayacak sutünlar alınmayabilir fakat mümkün olan en çok şekilde kaynak veritabanının şemasına benzemelidir. 
+</details>
 
-Northwind veritabanındaki verileri incremental olarak NorthiwndStaging veritabanına SSIS ile taşınır.
+<br/>
 
-Yeni bir veri Northwind.Orders tablosuna geldiği zaman NorthwindStaging.Orders tablosundan çekilen Primary Key'ler içerisinde olamayan Key direk olarak Staging tablosuna yazılıyor, bu kontrol ise Lookup ile yapılıyor. Bu süreç yeni veriler içindir ve direk insert edilir.
+NorthwindODS veritabanı, Olası NorthwindDW veritabanının olası şeması dikkate alınarak Northwind kaynak veritabanımıza mümkün olan en benzer şekilde oluşturuldu. 
 
-Update için ise Max(NorthwindStaging.Orders.ModifiedDate) değeri bulunduktan sonra bu değerden büyük olan Northwind.Orders verileri sonradan güncellenen verilerdir. Bunun için bu veriler NorthwindStaging.Orders tablosunda güncellenir.
 
-Silinen veriler için ise NorthwindStaging.Orders tablosunda olan ve Northwind.Orders tablosunda olmayan veriler bulunur, bu veriler direk olarak silinir.
+## Northwind to NorthwindODS için SSIS paketi oluşturulur.
 
-Bu tüm süreç SSIS paketi içerisinde NorthwindgToStaging.dtsx modülü içerisinde yürütülüyor. Değişken isimlendirmeleri olabildiğince açık olduğundan bu anlatımdan sonra anlaşılacağını düşünüyorum.
+<details>
+  <summary>ETL nedir? </summary>
+  
+	Veriler farklı sebeplerle sürekli olarak yer değiştirebilir. Bu aktarım süreçlerinede ETL (Extract Transform Load) deniliyor. Biz bu örnekte Source'dan ODS'ye, ODS'den DW'ye aktarım yapıyoruz. 
+</details>
+
+<br/>
+
+
+<details>
+  <summary>SSIS nedir? </summary>
+  
+	SSIS, Microsoft tarafından geliştirilen ETL aracıdır, yüksek performansta çalışabilir fakat Big Data için uygun bir araç olmayabilir.
+</details>
+
+<br/>
+
+Veritabanları oluşturulduktan sonra Northwind kaynak veritabanımızdaki veriler NorthwindODS katmanımıza ETL sürecimiz ile CDC dikkate alınarak taşınır. Bu projelere ./NorthwindBI içerisinden ulaşabilirsiniz.
+
+Ekleme ve güncelleme için ilk Product tablomuzu örnek olarak ele alırsak aşağıdaki script ile veriler Northwind kaynağından NorthwindODS kaynağındaki `MAX(ModifiedDate)` değerinden büyük olanları getirerek yapılır. Bu şekilde getirilen verini PK değeri eğer ODS katmanında yoksa veri insert edilir, eğer varsa update gelmiştir update edilir. Bu varlığın kontrolü ise Lookup komponenti ile yapılır. `WITH (NOLOCK)` sorgulara performans katar fakat veri tutarlılığından feragat eder.
+
+```sql
+
+DECLARE @LatestDate DATETIME
+
+SELECT @LatestDate = (SELECT MAX(ModifiedDate) FROM NorthwindODS.dbo.[Products] WITH (NOLOCK))
+
+IF @LatestDate IS NOT NULL
+	SELECT *
+	FROM [Northwind].[dbo].[Products] WITH (NOLOCK)
+	WHERE ModifiedDate > @LatestDate
+ELSE
+	SELECT *
+	FROM [Northwind].[dbo].[Products] WITH (NOLOCK)
+
+```
+
+![NorthwindToODS_Products](./img/NorthwindToODS_Products.png)
+
+
 
 ## NorthwindDW oluşturulur
 
-Bunun için ise NorthwindStaging tablosundaki oluşturma scriptleri kullanılır. Northwind veri tabanımızdaki tek transaction Order yapımız olduğu için tek Fact tablomuz Order oluyor. Bunun için Fact.Orders oluşturulur. Diğer tablolar bunun etrafında Dimension tabloları olarak oluşturulur. Ayrıca Fact.Order üzerinde text olarak tutulan kargolama bilgileride ayrı bir veritabanına taşınır. Yine ilgili oluşturma scripti [NorthwindDW.sql](./NorthwindDW.sql) içerisinde bulunabilir.
+<details>
+  <summary>DW Nedir?</summary>
+  
+	Data warehouse yani veri ambarı bir çok farklı probleme çözüm olarak kullanılır:
 
-Dim.Date tablosundaki verileri oluşturmak için TSQL kod parçası ilgili sql dosyasının sonunda yer almaktadır.
+	- Analiz soruglarımız OLTP sistemlerinde yürütürsek bu sistemlere aşırı yük bindirir ve çökmelere sebep olabiliriz.
+	- Geçmişe dönük verileri kaybetmeden tutabilir, bunlarla analiz yapabiliriz. 
+	- Tek bir doğruluk kaynağı oluştururuz. Şirketler CRM, mobil uygulamalar ve benzeri bir çok çeşitli kaynakla sürekli olarak veri oluştururlar, bu verileri tek bir kaynakta tutarlı olarak tutmayı sağlar. 
+</details>
 
-SCD yapımızı ele almak için Dim tablolarına `StartDate`, `EndDate` ve `Status` sutünları eklenir, ayrıca silinme durumunu ele almak için staging tablosunda olduğu gibi `IsDeleted` alanı eklenir, ayrıca silinen veriler için `EndDate` alanı silinme tarihi olarak işaretlenerek `EndDate` alanı silinme tarihiyle doldurulur.
+<br/>
 
-## NorthwindStaging to NorthwindDW için SSIS paketi oluşturulur.
+<details>
+  <summary>OLTP Nedir?</summary>
+  
+	OLTP yani Online transaction processing sistemleri örneğin bir SaaS uygulamasının kullandığı veritabanları için kullanılır. Analiz çalışmaları için değil, sistemin doğru ve hızlı bir şekilde çalışması için kullanılır.
+</details>
 
-# SCD
+<br/>
 
-- [x] Insert
+<details>
+  <summary>OLAP Nedir?</summary>
+  
+	OLAP yani Online analytical processing ise üzerinde aggregation, gruplama, analiz yapacağımız verileri tuttuğumuz sistemlerdir. 
+</details>
+
+<br/>
+
+<details>
+  <summary>SCD Nedir?</summary>
+  
+	SCD, veri ambarlarında geçmişe yönelik veriyi Dimension boyutunda kaybetmemek için kullanılır. Fact tablolarında geçmişe ait verileri Snapshot tablolarında tutabiliriz. Dimension tablolarında SCD birden çok tipte uygulanabilir. Biz burada Type 2 yani yeni bir satır ekleme yaparak kullandık. Bu yöntem ile yeni bir veri geldiğinde insert edilir, geçmiş verilerin `Status` alanı 0 yapılır.
+</details>
+
+<br/>
+
+DW şemamız için Dimensional şema kullanıldı ve kaynaktaki tek transcation order yapımız olduğu için sadece bir adet Fact oluşturuldu (Fact.Orders). Diğer tablolar bu tablo etrafında snowfleake şema oluşturacak şekilde yerleştirildi.
+
+Calculated bir tablo olan Dim.Date tablosundaki verileri oluşturmak için TSQL ile döngüler vs. kullanarak order tablosundaki en küçük ve en büyük yıl aralığını kapsayacak şekilde oluşturuldu.
+
+```sql
+
+/**** Dim.Date veri ekleme ****/
+DECLARE @i int;
+DECLARE @MinDateFromDB int;
+DECLARE @MaxDateFromDB int;
+DECLARE @MinDate date;
+DECLARE @MaxDate date;
+DECLARE @Date date;
+-- For Insert
+DECLARE @DateKey int;
+DECLARE @FullDateKey date;
+DECLARE @DayNumberOfWeek int;
+DECLARE @DayNumberOfMonth int;
+DECLARE @DayNumberOfYear int;
+DECLARE @MonthNumber int;
+DECLARE @YearNumber int;
+
+-- Minimum va Maximum date'ler çekilir.
+SET @MaxDateFromDB = (SELECT (DATEPART(YEAR, max(RequiredDate)) + 1) FROM Northwind.dbo.Orders)
+SET @MinDateFromDB = (SELECT (DATEPART(YEAR, min(OrderDate)) - 1) FROM Northwind.dbo.Orders)
+
+-- MaxDate ile MinDate arasındaki farkın günü alınır. +- 1 ile hesaplanır. Artık yıl +1 ile hesaplanmıştır.
+SET @i = ((@MaxDateFromDB - @MinDateFromDB) * 365) + 1
+
+-- Base date oluşturulur, üzerinden işlem yapılacak.
+SET @MinDate = DATEFROMPARTS(@MinDateFromDB, 1, 1)
+
+WHILE @i > 0
+BEGIN
+	SET @DateKey = convert(int, replace(convert(varchar(20), @MinDate), '-',''));
+	SET @FullDateKey = @MinDate;
+	SET @DayNumberOfWeek = DATEPART(WEEKDAY, @MinDate);
+	SET @DayNumberOfMonth = DATEPART(DAY, @MinDate);
+	SET @DayNumberOfYear = DATEPART(DAYOFYEAR, @MinDate);
+	SET @MonthNumber = DATEPART(MONTH, @MinDate);
+	SET @YearNumber = DATEPART(YEAR, @MinDate);
+
+	INSERT INTO NorthwindDW.Dim.Date
+           (DateKey
+           ,FullDateKey
+           ,DayNumberOfMonth
+           ,DayNumberOfWeek
+           ,DayNumberOfYear
+           ,MonthNumber
+           ,YearNumber)
+     VALUES
+           (@DateKey
+           ,@FullDateKey
+           ,@DayNumberOfMonth
+           ,@DayNumberOfWeek
+           ,@DayNumberOfYear
+           ,@MonthNumber
+           ,@YearNumber)
+		
+
+	SET @MinDate = DATEADD(DAY, 1, @MinDate)
+    SET @i = @i - 1
+END
+
+```
+
+SCD yapımızı ele almak için Dim tablolarına `StartDate`, `EndDate` ve `Status` sutünları eklenir.
+
+
+
+## NorthwindODS to NorthwindDW için SSIS paketi oluşturulur.
+
+Bu pakette diğer paketten farklı olarak Products tablomuz için SCD uygulandı. SCD aşamaları olarak aşağıdaki açıklamalar takip edilir.
+
+- Insert
 
 Yeni eklenen veriler ilk önce ODS katmanına yazılır, ODS katmanından DW katmanına aktarılır.
 
-- [x] Update
+- Update
 
-Güncel veriler için ilk olarak verinin güncel hali için yeni bir insert yapılır, bu eklenen kayıtta `StartDate`, bir önceki kayıtta `EndDate`, ODS katmanındaki `ModifiedDate` ile eşleştirilir. Eski kayıt için status 0 yapılır, yeni kayıtta status 1 olur, varsayılandır.
+Güncel veriler için ilk olarak verinin güncel hali için yeni bir insert yapılır, bu eklenen kayıtta `StartDate`, bir önceki kayıttaki `EndDate`, ODS katmanındaki `ModifiedDate` ile eşleştirilir. Eski kayıt için status 0 yapılır, yeni kayıtta status 1 olur, varsayılandır.
 
 | ProductKey | ProductAlternateKey | UnitPrice | StartDate               | EndDate                 | Status |
 | ---------- | ------------------- | --------- | ----------------------- | ----------------------- | ------ |
@@ -71,7 +220,7 @@ Güncel veriler için ilk olarak verinin güncel hali için yeni bir insert yap�
 | 2          | 21                  | 5         | 2022-07-26 10:30:00.000 | 2022-07-26 10:50:00.000 | 0      |
 | 3          | 21                  | 10        | 2022-07-26 10:50:00.000 | 9999-12-30 23:59:00.000 | 1      |
 
-- [ ] Delete
+- Delete
 
 Silinme tarihi tutulmadığı için, silinme durumunda `EndDate` alanı `GETDATE()` ile doldurulur, status 0 yapılır.
 
@@ -81,104 +230,4 @@ Silinme tarihi tutulmadığı için, silinme durumunda `EndDate` alanı `GETDATE
 | 2          | 21                  | 10        | 2022-07-26 10:30:00.000 | 2022-07-26 10:45:00.000 | 0      |
 
 
-Test
-
-```sql
-SELECT * FROM [NorthwindDW].[Dim].[Products] ORDER BY ProductKey DESC
-select * from [NorthwindODS].[dbo].[Products] ORDER BY ProductID DESC
-select * from [Northwind].[dbo].[Products] ORDER BY ProductID DESC
-
-  SELECT TOP 1  * from [NorthwindDW].[Dim].[Products]
-  WHERE [ProductAlternateKey] = 82
-  ORDER BY [StartDate] DESC 
-
-INSERT INTO [Northwind].[dbo].[Products]
-           ([ProductName]
-           ,[SupplierID]
-           ,[CategoryID]
-           ,[QuantityPerUnit]
-           ,[UnitPrice]
-           ,[UnitsInStock]
-           ,[Discontinued]
-           )
-     VALUES
-           ('Dertom'
-			,1
-			,1
-			,'10 boxes x 20 bags'
-			,15
-			,50
-           ,0
-           )
-GO
-
-
-UPDATE [Northwind].[dbo].[Products]
-   SET [ProductName] = 'Terbaz'
- WHERE ProductID = 82
-
- DELETE FROM [Northwind].[dbo].[Products]
- WHERE ProductID = 82
-
- DELETE FROM [NorthwindODS].[dbo].[Products]
- WHERE ProductID IN (80)
- 
-DELETE FROM [NorthwindDW].[Dim].[Products]
- WHERE ProductAlternateKey IN (82)
-```
-
-DECLARE @LatestDate DATETIME
-
-SELECT @LatestDate = (SELECT MAX(ModifiedDate) FROM NorthwindODS.dbo.[Employees])
-
-IF @LatestDate IS NOT NULL
-	SELECT od.OrderDetailID AS OrderKey
-		,[CustomerID] AS CustomerKey
-		,[EmployeeID] AS EmployeeKey
-		,[ProductID] AS ProductKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.OrderDate) = d.FullDateKey) AS OrderDateKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.RequiredDate) = d.FullDateKey) AS RequiredDateKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.ShippedDate) = d.FullDateKey) AS ShippedDateKey
-		,[ShipVia]
-		,[ShipName]
-		,[ShipAddress]
-		,[ShipCity]
-		,[ShipRegion]
-		,[ShipPostalCode]
-		,[ShipCountry]
-		,[UnitPrice]
-		,[Quantity]
-		,[Discount]
-		,[Freight]
-		,(Quantity * UnitPrice) - (Discount * (Quantity * UnitPrice)) AS Total
-		,od.[ModifiedDate]
-	FROM NorthwindODS.dbo.Orders o
-	LEFT JOIN NorthwindODS.dbo.[Order Details] od ON o.OrderID = od.OrderID
-	WHERE od.ModifiedDate > @LatestDate
-ELSE 
-	SELECT od.OrderDetailID AS OrderKey
-		,[CustomerID] AS CustomerKey
-		,[EmployeeID] AS EmployeeKey
-		,[ProductID] AS ProductKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.OrderDate) = d.FullDateKey) AS OrderDateKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.RequiredDate) = d.FullDateKey) AS RequiredDateKey
-		,(SELECT DateKey FROM NorthwindDW.Dim.Date d WHERE CONVERT(DATE, o.ShippedDate) = d.FullDateKey) AS ShippedDateKey
-		,[ShipVia]
-		,[ShipName]
-		,[ShipAddress]
-		,[ShipCity]
-		,[ShipRegion]
-		,[ShipPostalCode]
-		,[ShipCountry]
-		,[UnitPrice]
-		,[Quantity]
-		,[Discount]
-		,[Freight]
-		,(Quantity * UnitPrice) - (Discount * (Quantity * UnitPrice)) AS Total
-		,od.[ModifiedDate]
-	FROM NorthwindODS.dbo.Orders o
-	LEFT JOIN NorthwindODS.dbo.[Order Details] od ON o.OrderID = od.OrderID
-	
-[OLE DB Destination [63]] Error: SSIS Error Code DTS_E_OLEDBERROR.  An OLE DB error has occurred. Error code: 0x80004005.
-An OLE DB record is available.  Source: "Microsoft SQL Server Native Client 11.0"  Hresult: 0x80004005  Description: "The statement has been terminated.".
-An OLE DB record is available.  Source: "Microsoft SQL Server Native Client 11.0"  Hresult: 0x80004005  Description: "The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Orders_Customers". The conflict occurred in database "NorthwindDW", table "Dim.Customers", column 'CustomerKey'.".
+SCD dışında Fact.Orders tablomuzuda Northwind kaynağımızdaki Orders, Order Details tabloları ile besleriz. Bu iki tablo joinlenir, ship bilgileri text bilgi olduğu için kural gereği Fact tablolarında bulunmaz, bu sebeple ayrı bir tabloya taşındı. Tarih bilgilerinide Dim.Date tablosundan getiriyoruz.

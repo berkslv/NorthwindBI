@@ -2,18 +2,18 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>SSISNorthwind</Name>
-    <LastWriteTime>2022-07-28T13:03:30.6686698Z</LastWriteTime>
+    <LastWriteTime>2022-07-28T19:13:21.1836703Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
-      <Name>StagingToDW.dtsx</Name>
-      <LastWriteTime>2022-07-28T19:11:02.7784422Z</LastWriteTime>
+      <Name>SourceToODS.dtsx</Name>
+      <LastWriteTime>2022-07-28T19:12:52.2301578Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
-      <Name>SourceToStaging.dtsx</Name>
-      <LastWriteTime>2022-07-28T13:16:27.0755343Z</LastWriteTime>
+      <Name>ODSToDW.dtsx</Name>
+      <LastWriteTime>2022-07-28T19:13:14.3174685Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

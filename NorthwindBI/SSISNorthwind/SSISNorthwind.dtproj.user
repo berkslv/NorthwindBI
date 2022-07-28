@@ -8,7 +8,9 @@
         <UseWinAuth>false</UseWinAuth>
         <WinAuthUserName />
         <WinAuthDomain />
-        <StartObjectID>StagingToDW.dtsx</StartObjectID>
+        <ServerName>.</ServerName>
+        <PathOnServer>/SSISDB/Demos/SSISNorthwind</PathOnServer>
+        <StartObjectID>SourceToODS.dtsx</StartObjectID>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>
