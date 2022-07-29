@@ -13,7 +13,7 @@ Northwind sektörde çok sık kullanılan bir örnek veritabanı olduğu için v
 <details>
   <summary>CDC nedir? </summary>
   
-	Bir örnek üzerinden anlatacak olursak ETL paketleri genel olarak her gece 00:00 da çalıştırılır ve o güne ait verileri DW içerisine aktarır. Order tablosu gibi transaction barındıran tablolarda veri adeti aşırı büyüklüklere ulaşabileceği için DW üzerinde tüm verileri TRUNCATE et daha sonra tüm verileri tekrar aktar gibi bir mantık yürütemeyiz. Bunun yerine sadece o gün eklenen, güncellenen ve silinen satırlar işleme alınmalıdır. Bunun için SQL Server kendi CDC çözümünü barındırsada biz geliştirici olarak kendi logic'iğimizi implemente edebiliriz. Bunun için tarif ettiğim gibi `ModifiedDate` alanı eklenir, bu alan güncellemelerde güncellenecek şekilde trigger ile tetiklenir, daha sonra ilk hedefimiz olacak olan ODS (Operational Data Store) katmanındaki en güncel veriden sonraki veriler Northwind katmanından çekilerek çok daha performanslı bir süreç işletilir. Bu tarif edilen `ModifiedDate` güncellemesi aşağıdaki gibi yapılabilir.
+Bir örnek üzerinden anlatacak olursak ETL paketleri genel olarak her gece 00:00 da çalıştırılır ve o güne ait verileri DW içerisine aktarır. Order tablosu gibi transaction barındıran tablolarda veri adeti aşırı büyüklüklere ulaşabileceği için DW üzerinde tüm verileri TRUNCATE et daha sonra tüm verileri tekrar aktar gibi bir mantık yürütemeyiz. Bunun yerine sadece o gün eklenen, güncellenen ve silinen satırlar işleme alınmalıdır. Bunun için SQL Server kendi CDC çözümünü barındırsada biz geliştirici olarak kendi logic'iğimizi implemente edebiliriz. Bunun için tarif ettiğim gibi `ModifiedDate` alanı eklenir, bu alan güncellemelerde güncellenecek şekilde trigger ile tetiklenir, daha sonra ilk hedefimiz olacak olan ODS (Operational Data Store) katmanındaki en güncel veriden sonraki veriler Northwind katmanından çekilerek çok daha performanslı bir süreç işletilir. Bu tarif edilen `ModifiedDate` güncellemesi aşağıdaki gibi yapılabilir.
 </details>
 
 <br/>
@@ -43,7 +43,7 @@ Ek olarak Primary key içermeyen Order Details ve Employee Territories tablolar�
 <details>
   <summary>ODS katmanı nedir? </summary>
   
-	ODS katmanımız üzerinde kaynak veritabanı üzerinden çekilen veriler DW üzerine aktarılmadan önce tutulduğu operasyonel katmandır. Bu katmana analiz işlemlerinde kullanılmayacak sutünlar alınmayabilir fakat mümkün olan en çok şekilde kaynak veritabanının şemasına benzemelidir. 
+ODS katmanımız üzerinde kaynak veritabanı üzerinden çekilen veriler DW üzerine aktarılmadan önce tutulduğu operasyonel katmandır. Bu katmana analiz işlemlerinde kullanılmayacak sutünlar alınmayabilir fakat mümkün olan en çok şekilde kaynak veritabanının şemasına benzemelidir. 
 </details>
 
 <br/>
@@ -56,7 +56,7 @@ NorthwindODS veritabanı, Olası NorthwindDW veritabanının olası şeması dik
 <details>
   <summary>ETL nedir? </summary>
   
-	Veriler farklı sebeplerle sürekli olarak yer değiştirebilir. Bu aktarım süreçlerinede ETL (Extract Transform Load) deniliyor. Biz bu örnekte Source'dan ODS'ye, ODS'den DW'ye aktarım yapıyoruz. 
+Veriler farklı sebeplerle sürekli olarak yer değiştirebilir. Bu aktarım süreçlerinede ETL (Extract Transform Load) deniliyor. Biz bu örnekte Source'dan ODS'ye, ODS'den DW'ye aktarım yapıyoruz. 
 </details>
 
 <br/>
@@ -65,7 +65,7 @@ NorthwindODS veritabanı, Olası NorthwindDW veritabanının olası şeması dik
 <details>
   <summary>SSIS nedir? </summary>
   
-	SSIS, Microsoft tarafından geliştirilen ETL aracıdır, yüksek performansta çalışabilir fakat Big Data için uygun bir araç olmayabilir.
+SSIS, Microsoft tarafından geliştirilen ETL aracıdır, yüksek performansta çalışabilir fakat Big Data için uygun bir araç olmayabilir.
 </details>
 
 <br/>
@@ -90,6 +90,8 @@ ELSE
 
 ```
 
+Insert & Update Example
+
 ![NorthwindToODS_Products](./img/NorthwindToODS_Products.png)
 
 
@@ -99,27 +101,27 @@ ELSE
 <details>
   <summary>DW Nedir?</summary>
   
-	Data warehouse yani veri ambarı bir çok farklı probleme çözüm olarak kullanılır:
+Data warehouse yani veri ambarı bir çok farklı probleme çözüm olarak kullanılır:
 
-	- Analiz soruglarımız OLTP sistemlerinde yürütürsek bu sistemlere aşırı yük bindirir ve çökmelere sebep olabiliriz.
-	- Geçmişe dönük verileri kaybetmeden tutabilir, bunlarla analiz yapabiliriz. 
-	- Tek bir doğruluk kaynağı oluştururuz. Şirketler CRM, mobil uygulamalar ve benzeri bir çok çeşitli kaynakla sürekli olarak veri oluştururlar, bu verileri tek bir kaynakta tutarlı olarak tutmayı sağlar. 
+- Analiz soruglarımız OLTP sistemlerinde yürütürsek bu sistemlere aşırı yük bindirir ve çökmelere sebep olabiliriz.
+- Geçmişe dönük verileri kaybetmeden tutabilir, bunlarla analiz yapabiliriz. 
+- Tek bir doğruluk kaynağı oluştururuz. Şirketler CRM, mobil uygulamalar ve benzeri bir çok çeşitli kaynakla sürekli olarak veri oluştururlar, bu verileri tek bir kaynakta tutarlı olarak tutmayı sağlar. 
 </details>
 
 <br/>
 
 <details>
   <summary>OLTP Nedir?</summary>
-  
-	OLTP yani Online transaction processing sistemleri örneğin bir SaaS uygulamasının kullandığı veritabanları için kullanılır. Analiz çalışmaları için değil, sistemin doğru ve hızlı bir şekilde çalışması için kullanılır.
+
+OLTP yani Online transaction processing sistemleri örneğin bir SaaS uygulamasının kullandığı veritabanları için kullanılır. Analiz çalışmaları için değil, sistemin doğru ve hızlı bir şekilde çalışması için kullanılır.
 </details>
 
 <br/>
 
 <details>
   <summary>OLAP Nedir?</summary>
-  
-	OLAP yani Online analytical processing ise üzerinde aggregation, gruplama, analiz yapacağımız verileri tuttuğumuz sistemlerdir. 
+
+OLAP yani Online analytical processing ise üzerinde aggregation, gruplama, analiz yapacağımız verileri tuttuğumuz sistemlerdir. 
 </details>
 
 <br/>
@@ -127,7 +129,7 @@ ELSE
 <details>
   <summary>SCD Nedir?</summary>
   
-	SCD, veri ambarlarında geçmişe yönelik veriyi Dimension boyutunda kaybetmemek için kullanılır. Fact tablolarında geçmişe ait verileri Snapshot tablolarında tutabiliriz. Dimension tablolarında SCD birden çok tipte uygulanabilir. Biz burada Type 2 yani yeni bir satır ekleme yaparak kullandık. Bu yöntem ile yeni bir veri geldiğinde insert edilir, geçmiş verilerin `Status` alanı 0 yapılır.
+SCD, veri ambarlarında geçmişe yönelik veriyi Dimension boyutunda kaybetmemek için kullanılır. Fact tablolarında geçmişe ait verileri Snapshot tablolarında tutabiliriz. Dimension tablolarında SCD birden çok tipte uygulanabilir. Biz burada Type 2 yani yeni bir satır ekleme yaparak kullandık. Bu yöntem ile yeni bir veri geldiğinde insert edilir, geçmiş verilerin `Status` alanı 0 yapılır.
 </details>
 
 <br/>
@@ -208,7 +210,7 @@ Bu pakette diğer paketten farklı olarak Products tablomuz için SCD uygulandı
 
 - Insert
 
-Yeni eklenen veriler ilk önce ODS katmanına yazılır, ODS katmanından DW katmanına aktarılır.
+Yeni eklenen veriler ilk önce ODS katmanına yazılır, ODS katmanından DW katmanına `UpdatedDate` ve DW katmanındaki `StartDate` alanlarında göre CDC uygulanarak alınır.
 
 - Update
 
