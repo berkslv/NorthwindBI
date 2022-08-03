@@ -5,13 +5,18 @@ VisualStudioVersion = 16.0.32602.291
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "SSISNorthwind", "SSISNorthwind\SSISNorthwind.dtproj", "{821A116F-D1C4-49C4-8753-C4181CBC24B6}"
 EndProject
+Project("{6870E480-7721-4708-BFB8-9AE898AA21B3}") = "SSASNorthwind", "SSASNorthwind\SSASNorthwind.smproj", "{8CE414BB-95B2-4C99-9E03-51BA72086E22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Development|Default = Development|Default
+		Development|x86 = Development|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{821A116F-D1C4-49C4-8753-C4181CBC24B6}.Development|Default.ActiveCfg = Development
-		{821A116F-D1C4-49C4-8753-C4181CBC24B6}.Development|Default.Build.0 = Development
+		{821A116F-D1C4-49C4-8753-C4181CBC24B6}.Development|x86.ActiveCfg = Development
+		{821A116F-D1C4-49C4-8753-C4181CBC24B6}.Development|x86.Build.0 = Development
+		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.ActiveCfg = Development|x86
+		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.Build.0 = Development|x86
+		{8CE414BB-95B2-4C99-9E03-51BA72086E22}.Development|x86.Deploy.0 = Development|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

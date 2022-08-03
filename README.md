@@ -233,3 +233,19 @@ Silinme tarihi tutulmadığı için, silinme durumunda `EndDate` alanı `GETDATE
 
 
 SCD dışında Fact.Orders tablomuzuda Northwind kaynağımızdaki Orders, Order Details tabloları ile besleriz. Bu iki tablo joinlenir, ship bilgileri text bilgi olduğu için kural gereği Fact tablolarında bulunmaz, bu sebeple ayrı bir tabloya taşındı. Tarih bilgilerinide Dim.Date tablosundan getiriyoruz.
+
+## NorthwindDW, SSAS üzerine aktarılır
+
+SSAS Tabular Model üzerinde DAX sorguları ile anlamlı ölçüler oluşturulur. SSAS aynı zamanda direk olarak Power BI üzerine aktarma yapmaya göre çok daha performanslı çalışır. Bazı örnek ölçüler aşağıdaki gibidir. Bu oluşturduğumuz ölçüler ile son aşamaya geçecek ve Power BI raporu oluşturacağız.
+
+```DAX
+
+Total profit:=  SUMX(Orders, ( Orders[UnitPrice] * Orders[Quantity] ) - ( Orders[Discount] * Orders[UnitPrice] * Orders[Quantity] ) - Orders[Freight])
+
+Count of products:= CALCULATE(DISTINCTCOUNT(Products[ProductKey]), Products[Status] == True)
+
+```
+
+## Power BI raporu oluşturulur.
+
+Tüm süreç boyunca oluşturduğumuz ve anlamlandırdığımız yapıları kullanarak son aşamamız olan Power BI üzerinden anlamlı veri özetleri ve veri analizleri oluştururuz. Burada amaç Northwind şirketini yöneten kişilere şirketin gidişatı hakkında bilgi vermek, geçmiş verileri üzerinden analizler sunarak geleceğe bakış sağlamaktır.

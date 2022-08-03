@@ -24,6 +24,7 @@ IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Dim')
 DROP TABLE IF EXISTS [Fact].[Orders]
 CREATE TABLE [Fact].[Orders] (
 	OrderKey int UNIQUE NOT NULL,
+	OrderParentKey int NOT NULL,
 	CustomerKey [nchar](5) NULL,
 	EmployeeKey int NULL,
 	ProductKey int NULL,
@@ -36,7 +37,6 @@ CREATE TABLE [Fact].[Orders] (
 	Quantity smallint NULL,
 	Discount real NULL,
 	Freight money NULL,
-	Total money NULL,
 	ModifiedDate DateTime NOT NULL,
 	CONSTRAINT PK_Orders PRIMARY KEY CLUSTERED (OrderKey)
 ); 

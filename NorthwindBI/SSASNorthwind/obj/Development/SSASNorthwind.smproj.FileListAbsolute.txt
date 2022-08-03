@@ -1,0 +1,7 @@
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\bin\Model.asdatabase
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\bin\Model.deploymenttargets
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\bin\Model.deploymentoptions
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\obj\Development\SSASNorthwind.smproj.CoreCompileInputs.cache
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\obj\Development\Model.asdatabase
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\obj\Development\Model.deploymentoptions
+C:\Users\berks_9484iah\Desktop\NorthwindBI\NorthwindBI\SSASNorthwind\obj\Development\Model.deploymenttargets

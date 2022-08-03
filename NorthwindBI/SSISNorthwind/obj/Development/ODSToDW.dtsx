@@ -11,8 +11,8 @@
   DTS:LocaleID="1055"
   DTS:ObjectName="ODSToDW"
   DTS:PackageType="5"
-  DTS:VersionBuild="43"
-  DTS:VersionGUID="{2AE22BF5-134F-4DC6-9300-F0A037F1137D}">
+  DTS:VersionBuild="46"
+  DTS:VersionGUID="{DE4DB995-2D2E-4CAC-9D0D-593697CB334D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -6673,15 +6673,6 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           name="Freight"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[Total]"
-                          dataType="cy"
-                          errorOrTruncationOperation="Conversion"
-                          errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[Total]"
-                          lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[Total]"
-                          name="Total"
-                          truncationRowDisposition="FailComponent" />
-                        <outputColumn
                           refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
@@ -6689,6 +6680,15 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           externalMetadataColumnId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
                           lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
                           name="ModifiedDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[OrderParentKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderParentKey]"
+                          lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].Columns[OrderParentKey]"
+                          name="OrderParentKey"
                           truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
@@ -6747,13 +6747,13 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           dataType="cy"
                           name="Freight" />
                         <externalMetadataColumn
-                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[Total]"
-                          dataType="cy"
-                          name="Total" />
-                        <externalMetadataColumn
                           refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           name="ModifiedDate" />
+                        <externalMetadataColumn
+                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Output].ExternalColumns[OrderParentKey]"
+                          dataType="i4"
+                          name="OrderParentKey" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -6766,6 +6766,11 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           dataType="i4"
                           lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[OrderKey]"
                           name="OrderKey" />
+                        <outputColumn
+                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[OrderParentKey]"
+                          dataType="i4"
+                          lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[OrderParentKey]"
+                          name="OrderParentKey" />
                         <outputColumn
                           refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
                           dataType="wstr"
@@ -6827,11 +6832,6 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           dataType="cy"
                           lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[Freight]"
                           name="Freight" />
-                        <outputColumn
-                          refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[Total]"
-                          dataType="cy"
-                          lineageId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[Total]"
-                          name="Total" />
                         <outputColumn
                           refId="Package\Fact Orders\Delete\Fact Orders.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
                           dataType="dbTimeStamp"
@@ -7266,12 +7266,6 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[Freight]"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Freight]" />
                         <inputColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].Columns[Total]"
-                          cachedDataType="r4"
-                          cachedName="Total"
-                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
-                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total]" />
-                        <inputColumn
                           refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].Columns[ModifiedDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="ModifiedDate"
@@ -7289,6 +7283,12 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           cachedName="ShipKey"
                           externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[ShipKey]"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipKey]" />
+                        <inputColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].Columns[OrderParentKey]"
+                          cachedDataType="i4"
+                          cachedName="OrderParentKey"
+                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[OrderParentKey]"
+                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderParentKey]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -7346,13 +7346,13 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           dataType="cy"
                           name="Freight" />
                         <externalMetadataColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
-                          dataType="cy"
-                          name="Total" />
-                        <externalMetadataColumn
                           refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           name="ModifiedDate" />
+                        <externalMetadataColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input].ExternalColumns[OrderParentKey]"
+                          dataType="i4"
+                          name="OrderParentKey" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -7521,12 +7521,6 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[Freight]"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Freight]" />
                         <inputColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].Columns[Total]"
-                          cachedDataType="r4"
-                          cachedName="Total"
-                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
-                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total]" />
-                        <inputColumn
                           refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].Columns[ModifiedDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="ModifiedDate"
@@ -7544,6 +7538,12 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           cachedName="ShipKey"
                           externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[ShipKey]"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipKey]" />
+                        <inputColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].Columns[OrderParentKey]"
+                          cachedDataType="i4"
+                          cachedName="OrderParentKey"
+                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[OrderParentKey]"
+                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderParentKey]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -7601,13 +7601,13 @@ DELETE FROM [NorthwindDW].[Dim].[Ship]
                           dataType="cy"
                           name="Freight" />
                         <externalMetadataColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
-                          dataType="cy"
-                          name="Total" />
-                        <externalMetadataColumn
                           refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           name="ModifiedDate" />
+                        <externalMetadataColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input].ExternalColumns[OrderParentKey]"
+                          dataType="i4"
+                          name="OrderParentKey" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -8274,6 +8274,7 @@ SELECT @LatestDate = (SELECT MAX(ModifiedDate) FROM NorthwindDW.Fact.Orders)
 
 IF @LatestDate IS NOT NULL
 	SELECT od.OrderDetailID AS OrderKey
+		,o.OrderID AS OrderParentKey
 		,[CustomerID] AS CustomerKey
 		,[EmployeeID] AS EmployeeKey
 		,[ProductID] AS ProductKey
@@ -8292,13 +8293,13 @@ IF @LatestDate IS NOT NULL
 		,[Quantity]
 		,[Discount]
 		,[Freight]
-		,(Quantity * UnitPrice) - (Discount * (Quantity * UnitPrice)) AS Total
 		,od.[ModifiedDate]
 	FROM NorthwindODS.dbo.Orders o
 	LEFT JOIN NorthwindODS.dbo.[Order Details] od ON o.OrderID = od.OrderID
 	WHERE od.ModifiedDate &gt; @LatestDate OR o.ModifiedDate &gt; @LatestDate
 ELSE 
 	SELECT od.OrderDetailID AS OrderKey
+		,o.OrderID AS OrderParentKey
 		,[CustomerID] AS CustomerKey
 		,[EmployeeID] AS EmployeeKey
 		,[ProductID] AS ProductKey
@@ -8317,7 +8318,6 @@ ELSE
 		,[Quantity]
 		,[Discount]
 		,[Freight]
-		,(Quantity * UnitPrice) - (Discount * (Quantity * UnitPrice)) AS Total
 		,od.[ModifiedDate]
 	FROM NorthwindODS.dbo.Orders o
 	LEFT JOIN NorthwindODS.dbo.[Order Details] od ON o.OrderID = od.OrderID</property>
@@ -8457,15 +8457,6 @@ ELSE
                           name="Freight"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total]"
-                          dataType="r4"
-                          errorOrTruncationOperation="Conversion"
-                          errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total]"
-                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total]"
-                          name="Total"
-                          truncationRowDisposition="FailComponent" />
-                        <outputColumn
                           refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
@@ -8552,6 +8543,15 @@ ELSE
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipKey]"
                           name="ShipKey"
                           truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderParentKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderParentKey]"
+                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderParentKey]"
+                          name="OrderParentKey"
+                          truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -8601,10 +8601,6 @@ ELSE
                           dataType="cy"
                           name="Freight" />
                         <externalMetadataColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total]"
-                          dataType="r4"
-                          name="Total" />
-                        <externalMetadataColumn
                           refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
                           dataType="dbTimeStamp"
                           name="ModifiedDate" />
@@ -8646,6 +8642,10 @@ ELSE
                           refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipKey]"
                           dataType="i4"
                           name="ShipKey" />
+                        <externalMetadataColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderParentKey]"
+                          dataType="i4"
+                          name="OrderParentKey" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -8658,6 +8658,11 @@ ELSE
                           dataType="i4"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderKey]"
                           name="OrderKey" />
+                        <outputColumn
+                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderParentKey]"
+                          dataType="i4"
+                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderParentKey]"
+                          name="OrderParentKey" />
                         <outputColumn
                           refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
                           dataType="wstr"
@@ -8755,11 +8760,6 @@ ELSE
                           dataType="cy"
                           lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Freight]"
                           name="Freight" />
-                        <outputColumn
-                          refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total]"
-                          dataType="r4"
-                          lineageId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total]"
-                          name="Total" />
                         <outputColumn
                           refId="Package\Fact Orders\Insert &amp; Update\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
                           dataType="dbTimeStamp"
@@ -17633,27 +17633,31 @@ ELSE
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="134,42.6666666666667"
-          Id="Package\Fact Orders\Delete\Fact Orders"
-          TopLeft="98.5714285714285,32.1428571428572" />
-        <NodeLayout
           Size="122.666666666667,42.6666666666667"
           Id="Package\Fact Orders\Delete\Lookup 1"
           TopLeft="105,115.714285714286" />
+        <NodeLayout
+          Size="109.333333333334,42.6666666666667"
+          Id="Package\Fact Orders\Delete\Delete"
+          TopLeft="108.571428571429,207.857142857143" />
+        <NodeLayout
+          Size="134,42.6666666666667"
+          Id="Package\Fact Orders\Delete\Fact Orders"
+          TopLeft="99.5714285714285,31.1428571428572" />
         <EdgeLayout
           Id="Package\Fact Orders\Delete.Paths[OLE DB Source Output]"
-          TopLeft="165.952380952381,74.8095238095239">
+          TopLeft="166.452380952381,73.8095238095239">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,40.9047619047619"
+              EndConnector="0,41.9047619047622"
               Start="0,0"
-              End="0,33.4047619047619">
+              End="0,34.4047619047622">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.4047619047619" />
+                    End="0,34.4047619047622" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -17662,10 +17666,6 @@ ELSE
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="109.333333333334,42.6666666666667"
-          Id="Package\Fact Orders\Delete\Delete"
-          TopLeft="108.571428571429,207.857142857143" />
         <EdgeLayout
           Id="Package\Fact Orders\Delete.Paths[Lookup No Match Output]"
           TopLeft="164.785714285714,158.380952380952">
@@ -17739,45 +17739,37 @@ ELSE
           Id="Package\Fact Orders\Insert &amp; Update\Insert Orders"
           TopLeft="184.999997243285,206.699996303916" />
         <NodeLayout
-          Size="150.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update\OLE DB Source"
-          TopLeft="378.666666666667,12.6666666666666" />
+          Size="130.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update\Multicast 2"
+          TopLeft="393.124994141981,286.716664376954" />
+        <NodeLayout
+          Size="201.333333333334,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete"
+          TopLeft="497.666659737627,376.933330264886" />
         <NodeLayout
           Size="121.333333333334,42.6666666666667"
           Id="Package\Fact Orders\Insert &amp; Update\Multicast"
           TopLeft="132.666666666667,83.3333333333334" />
         <NodeLayout
+          Size="190.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update\Insert Ship After Delete"
+          TopLeft="248.291663453604,371.116661866406" />
+        <NodeLayout
           Size="131.333333333334,42.6666666666667"
           Id="Package\Fact Orders\Insert &amp; Update\Insert Ship"
-          TopLeft="38.2916665828477,208.916666376094" />
+          TopLeft="38.9166665735345,208.916666376094" />
+        <NodeLayout
+          Size="178.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update\Delete Ship &amp; Orders"
+          TopLeft="373.124994440004,209.949996245801" />
         <NodeLayout
           Size="113.333333333334,42.6666666666667"
           Id="Package\Fact Orders\Insert &amp; Update\Lookup"
           TopLeft="404.958333100502,89.3333333333333" />
-        <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Lookup No Match Output]"
-          TopLeft="404.958333100502,107.666666666667">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-150.958333100502,0"
-              Start="0,0"
-              End="-143.458333100502,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-143.458333100502,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-127.535553269001,5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Fact Orders\Insert &amp; Update\OLE DB Source"
+          TopLeft="378.666666666667,12.6666666666666" />
         <EdgeLayout
           Id="Package\Fact Orders\Insert &amp; Update.Paths[OLE DB Source Output]"
           TopLeft="457.812499883585,55.3333333333333">
@@ -17792,6 +17784,62 @@ ELSE
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[OLE DB Command Output]"
+          TopLeft="460.458327624326,252.616662912468">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.1000014644861"
+              Start="0,0"
+              End="0,26.6000014644861">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.6000014644861" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
+          TopLeft="478.902771919759,329.383331043621">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="119.430554484535,47.5499992212651"
+              Start="0,0"
+              End="119.430554484535,40.0499992212651">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.3651206505959" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.3651206505959"
+                    Point2="0,19.3651206505959"
+                    Point3="4,19.3651206505959" />
+                  <mssgle:LineSegment
+                    End="115.430554484535,19.3651206505959" />
+                  <mssgle:CubicBezierSegment
+                    Point1="115.430554484535,19.3651206505959"
+                    Point2="119.430554484535,19.3651206505959"
+                    Point3="119.430554484535,23.3651206505959" />
+                  <mssgle:LineSegment
+                    End="119.430554484535,40.0499992212651" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -17835,31 +17883,31 @@ ELSE
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 1]"
-          TopLeft="174.444444444445,126">
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 11]"
+          TopLeft="438.01388303087,329.383331043621">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-70.4861111949304,82.9166663760942"
+              EndConnector="-94.3888862439327,41.7333308227853"
               Start="0,0"
-              End="-70.4861111949304,75.4166663760942">
+              End="-94.3888862439327,34.2333308227853">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.8141719711621" />
+                    End="0,12.9962355366989" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,29.8141719711621"
-                    Point2="0,33.8141719711621"
-                    Point3="-4,33.8141719711621" />
+                    Point1="0,12.9962355366989"
+                    Point2="0,16.9962355366989"
+                    Point3="-4,16.9962355366989" />
                   <mssgle:LineSegment
-                    End="-66.4861111949304,33.8141719711621" />
+                    End="-90.3888862439327,16.9962355366989" />
                   <mssgle:CubicBezierSegment
-                    Point1="-66.4861111949304,33.8141719711621"
-                    Point2="-70.4861111949304,33.8141719711621"
-                    Point3="-70.4861111949304,37.8141719711621" />
+                    Point1="-90.3888862439327,16.9962355366989"
+                    Point2="-94.3888862439327,16.9962355366989"
+                    Point3="-94.3888862439327,20.9962355366989" />
                   <mssgle:LineSegment
-                    End="-70.4861111949304,75.4166663760942" />
+                    End="-94.3888862439327,34.2333308227853" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -17868,10 +17916,64 @@ ELSE
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="178.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update\Delete Ship &amp; Orders"
-          TopLeft="373.124994440004,209.949996245801" />
+        <EdgeLayout
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 1]"
+          TopLeft="174.444444444445,126">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-69.8611112042436,82.916666376094"
+              Start="0,0"
+              End="-69.8611112042436,75.416666376094">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.814171971162" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.814171971162"
+                    Point2="0,33.814171971162"
+                    Point3="-4,33.814171971162" />
+                  <mssgle:LineSegment
+                    End="-65.8611112042436,33.814171971162" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-65.8611112042436,33.814171971162"
+                    Point2="-69.8611112042436,33.814171971162"
+                    Point3="-69.8611112042436,37.814171971162" />
+                  <mssgle:LineSegment
+                    End="-69.8611112042436,75.416666376094" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Lookup No Match Output]"
+          TopLeft="404.958333100502,107.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-150.958333100502,0"
+              Start="0,0"
+              End="-143.458333100502,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-143.458333100502,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-127.535553269001,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Fact Orders\Insert &amp; Update.Paths[Lookup Match Output]"
           TopLeft="462.041663770253,132">
@@ -17896,113 +17998,24 @@ ELSE
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="190.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update\Insert Ship After Delete"
-          TopLeft="256.416663332532,371.116661866406" />
-        <NodeLayout
-          Size="201.333333333334,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete"
-          TopLeft="497.666659737627,376.933330264886" />
-        <NodeLayout
-          Size="130.666666666667,42.6666666666667"
-          Id="Package\Fact Orders\Insert &amp; Update\Multicast 2"
-          TopLeft="393.124994141981,286.716664376954" />
-        <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[OLE DB Command Output]"
-          TopLeft="460.458327624326,252.616662912468">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.1000014644861"
-              Start="0,0"
-              End="0,26.6000014644861">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.6000014644861" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 11]"
-          TopLeft="438.01388303087,329.383331043621">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-86.2638863650046,41.7333308227855"
-              Start="0,0"
-              End="-86.2638863650046,34.2333308227855">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,12.996235536699" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,12.996235536699"
-                    Point2="0,16.996235536699"
-                    Point3="-4,16.996235536699" />
-                  <mssgle:LineSegment
-                    End="-82.2638863650046,16.996235536699" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-82.2638863650046,16.996235536699"
-                    Point2="-86.2638863650046,16.996235536699"
-                    Point3="-86.2638863650046,20.996235536699" />
-                  <mssgle:LineSegment
-                    End="-86.2638863650046,34.2333308227855" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
-          TopLeft="478.902771919759,329.383331043621">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="119.430554484535,47.5499992212651"
-              Start="0,0"
-              End="119.430554484535,40.0499992212651">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15.3651206505959" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.3651206505959"
-                    Point2="0,19.3651206505959"
-                    Point3="4,19.3651206505959" />
-                  <mssgle:LineSegment
-                    End="115.430554484535,19.3651206505959" />
-                  <mssgle:CubicBezierSegment
-                    Point1="115.430554484535,19.3651206505959"
-                    Point2="119.430554484535,19.3651206505959"
-                    Point3="119.430554484535,23.3651206505959" />
-                  <mssgle:LineSegment
-                    End="119.430554484535,40.0499992212651" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Fact Orders\Insert &amp; Update\Insert Orders">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

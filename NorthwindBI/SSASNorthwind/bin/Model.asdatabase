@@ -1,0 +1,1804 @@
+{
+  "name": "SSASNorthwind",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "tr-TR",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost NorthwindDW",
+        "connectionString": "Provider=SQLNCLI11;Data Source=.;Initial Catalog=NorthwindDW;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Categories",
+        "columns": [
+          {
+            "name": "CategoryKey",
+            "dataType": "int64",
+            "sourceColumn": "CategoryKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CategoryName",
+            "dataType": "string",
+            "sourceColumn": "CategoryName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Categories",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Categories].* FROM [Dim].[Categories] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Categories].* FROM [Dim].[Categories] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Categories"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Customers",
+        "columns": [
+          {
+            "name": "CustomerKey",
+            "dataType": "string",
+            "sourceColumn": "CustomerKey",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CompanyName",
+            "dataType": "string",
+            "sourceColumn": "CompanyName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ContactName",
+            "dataType": "string",
+            "sourceColumn": "ContactName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ContactTitle",
+            "dataType": "string",
+            "sourceColumn": "ContactTitle",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Region",
+            "dataType": "string",
+            "sourceColumn": "Region",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PostalCode",
+            "dataType": "string",
+            "sourceColumn": "PostalCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "sourceColumn": "Phone",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Fax",
+            "dataType": "string",
+            "sourceColumn": "Fax",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Customers",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Customers].* FROM [Dim].[Customers] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Customers].* FROM [Dim].[Customers] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Customers"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Date",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FullDateKey",
+            "dataType": "dateTime",
+            "sourceColumn": "FullDateKey",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "DayNumberOfMonth",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfMonth",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DayNumberOfWeek",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfWeek",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "DayNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfYear",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MonthNumber",
+            "dataType": "int64",
+            "sourceColumn": "MonthNumber",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "YearNumber",
+            "dataType": "int64",
+            "sourceColumn": "YearNumber",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Date",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Date].* FROM [Dim].[Date] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Date].* FROM [Dim].[Date] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Date"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Employees",
+        "columns": [
+          {
+            "name": "EmployeeKey",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "sourceColumn": "LastName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "sourceColumn": "FirstName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Title",
+            "dataType": "string",
+            "sourceColumn": "Title",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "TitleOfCourtesy",
+            "dataType": "string",
+            "sourceColumn": "TitleOfCourtesy",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "BirthDate",
+            "dataType": "dateTime",
+            "sourceColumn": "BirthDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "HireDate",
+            "dataType": "dateTime",
+            "sourceColumn": "HireDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Region",
+            "dataType": "string",
+            "sourceColumn": "Region",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PostalCode",
+            "dataType": "string",
+            "sourceColumn": "PostalCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "HomePhone",
+            "dataType": "string",
+            "sourceColumn": "HomePhone",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Extension",
+            "dataType": "string",
+            "sourceColumn": "Extension",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Notes",
+            "dataType": "string",
+            "sourceColumn": "Notes",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ReportsTo",
+            "dataType": "int64",
+            "sourceColumn": "ReportsTo",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "type": "calculated",
+            "name": "FullName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": " Employees[TitleOfCourtesy] & \" \" & Employees[FirstName] & \" \" & Employees[LastName]"
+          },
+          {
+            "type": "calculated",
+            "name": "Age",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF(Employees[BirthDate], TODAY(), YEAR)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Employees",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Employees].* FROM [Dim].[Employees] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Employees].* FROM [Dim].[Employees] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Employees"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "EmployeeTerritories",
+        "columns": [
+          {
+            "name": "EmployeeTerritoryKey",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeTerritoryKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "EmployeeKey",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TerritoryKey",
+            "dataType": "string",
+            "sourceColumn": "TerritoryKey",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "EmployeeTerritories",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[EmployeeTerritories].* FROM [Dim].[EmployeeTerritories] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[EmployeeTerritories].* FROM [Dim].[EmployeeTerritories] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "EmployeeTerritories"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Products",
+        "columns": [
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ProductAlternateKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductAlternateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "SupplierKey",
+            "dataType": "int64",
+            "sourceColumn": "SupplierKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CategoryKey",
+            "dataType": "int64",
+            "sourceColumn": "CategoryKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ProductName",
+            "dataType": "string",
+            "sourceColumn": "ProductName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "QuantityPerUnit",
+            "dataType": "string",
+            "sourceColumn": "QuantityPerUnit",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice",
+            "formatString": "\"₺\"#,0.00;-\"₺\"#,0.00;\"₺\"#,0.00",
+            "sourceProviderType": "Currency",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1055\" DisplayName=\"₺ Turkish (Turkey)\" Symbol=\"₺\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "UnitsInStock",
+            "dataType": "int64",
+            "sourceColumn": "UnitsInStock",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "UnitsOnOrder",
+            "dataType": "int64",
+            "sourceColumn": "UnitsOnOrder",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "ReorderLevel",
+            "dataType": "int64",
+            "sourceColumn": "ReorderLevel",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "Discontinued",
+            "dataType": "boolean",
+            "sourceColumn": "Discontinued",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "sourceColumn": "StartDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "sourceColumn": "EndDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "Status",
+            "dataType": "boolean",
+            "sourceColumn": "Status",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Products",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Products].* FROM [Dim].[Products] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Products].* FROM [Dim].[Products] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Products"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Regions",
+        "columns": [
+          {
+            "name": "RegionKey",
+            "dataType": "int64",
+            "sourceColumn": "RegionKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "RegionDescription",
+            "dataType": "string",
+            "sourceColumn": "RegionDescription",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Regions",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Regions].* FROM [Dim].[Regions] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Regions].* FROM [Dim].[Regions] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Regions"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Ship",
+        "columns": [
+          {
+            "name": "ShipKey",
+            "dataType": "int64",
+            "sourceColumn": "ShipKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Name",
+            "dataType": "string",
+            "sourceColumn": "Name",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Region",
+            "dataType": "string",
+            "sourceColumn": "Region",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PostalCode",
+            "dataType": "string",
+            "sourceColumn": "PostalCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Ship",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Ship].* FROM [Dim].[Ship] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Ship].* FROM [Dim].[Ship] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Ship"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Shippers",
+        "columns": [
+          {
+            "name": "ShipperKey",
+            "dataType": "int64",
+            "sourceColumn": "ShipperKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CompanyName",
+            "dataType": "string",
+            "sourceColumn": "CompanyName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "sourceColumn": "Phone",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Shippers",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Shippers].* FROM [Dim].[Shippers] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Shippers].* FROM [Dim].[Shippers] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Shippers"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Suppliers",
+        "columns": [
+          {
+            "name": "SupplierKey",
+            "dataType": "int64",
+            "sourceColumn": "SupplierKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CompanyName",
+            "dataType": "string",
+            "sourceColumn": "CompanyName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ContactName",
+            "dataType": "string",
+            "sourceColumn": "ContactName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ContactTitle",
+            "dataType": "string",
+            "sourceColumn": "ContactTitle",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Address",
+            "dataType": "string",
+            "sourceColumn": "Address",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Region",
+            "dataType": "string",
+            "sourceColumn": "Region",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "PostalCode",
+            "dataType": "string",
+            "sourceColumn": "PostalCode",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Phone",
+            "dataType": "string",
+            "sourceColumn": "Phone",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Fax",
+            "dataType": "string",
+            "sourceColumn": "Fax",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "HomePage",
+            "dataType": "string",
+            "sourceColumn": "HomePage",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Suppliers",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Suppliers].* FROM [Dim].[Suppliers] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Suppliers].* FROM [Dim].[Suppliers] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Suppliers"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Territories",
+        "columns": [
+          {
+            "name": "TerritoryKey",
+            "dataType": "string",
+            "sourceColumn": "TerritoryKey",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "TerritoryDescription",
+            "dataType": "string",
+            "sourceColumn": "TerritoryDescription",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "RegionKey",
+            "dataType": "int64",
+            "sourceColumn": "RegionKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Territories",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Dim].[Territories].* FROM [Dim].[Territories] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Dim].[Territories].* FROM [Dim].[Territories] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Territories"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Dim"
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "columns": [
+          {
+            "name": "OrderKey",
+            "dataType": "int64",
+            "sourceColumn": "OrderKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CustomerKey",
+            "dataType": "string",
+            "sourceColumn": "CustomerKey",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "EmployeeKey",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "sourceColumn": "ProductKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ShipKey",
+            "dataType": "int64",
+            "sourceColumn": "ShipKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ShipperKey",
+            "dataType": "int64",
+            "sourceColumn": "ShipperKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "OrderDateKey",
+            "dataType": "int64",
+            "sourceColumn": "OrderDateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "RequiredDateKey",
+            "dataType": "int64",
+            "sourceColumn": "RequiredDateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ShippedDateKey",
+            "dataType": "int64",
+            "sourceColumn": "ShippedDateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice",
+            "formatString": "\"₺\"#,0.00;-\"₺\"#,0.00;\"₺\"#,0.00",
+            "sourceProviderType": "Currency",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1055\" DisplayName=\"₺ Turkish (Turkey)\" Symbol=\"₺\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Quantity",
+            "dataType": "int64",
+            "sourceColumn": "Quantity",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "Discount",
+            "dataType": "double",
+            "sourceColumn": "Discount",
+            "sourceProviderType": "Single"
+          },
+          {
+            "name": "Freight",
+            "dataType": "decimal",
+            "sourceColumn": "Freight",
+            "formatString": "\"₺\"#,0.00;-\"₺\"#,0.00;\"₺\"#,0.00",
+            "sourceProviderType": "Currency",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1055\" DisplayName=\"₺ Turkish (Turkey)\" Symbol=\"₺\" PositivePattern=\"0\" NegativePattern=\"1\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ModifiedDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "OrderParentKey",
+            "dataType": "int64",
+            "sourceColumn": "OrderParentKey"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Orders",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [Fact].[Orders].* FROM [Fact].[Orders] ",
+              "dataSource": "SqlServer localhost NorthwindDW"
+            },
+            "annotations": [
+              {
+                "name": "TableWidgetSerialization",
+                "value": [
+                  "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"TableWidgetSerialization\"><AnnotationContent><![CDATA[<?xml version=\"1.0\"?>",
+                  "<TableWidgetGridSerialization xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">",
+                  "  <ColumnSuggestedType />",
+                  "  <ColumnFormat />",
+                  "  <ColumnAccuracy />",
+                  "  <ColumnCurrencySymbol />",
+                  "  <ColumnPositivePattern />",
+                  "  <ColumnNegativePattern />",
+                  "  <ColumnWidths>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>105</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderParentKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>150</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>CustomerKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>132</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>EmployeeKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>133</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ProductKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>118</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShipKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>95</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShipperKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>118</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>137</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>RequiredDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>159</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShippedDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>153</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>UnitPrice</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>102</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Quantity</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>99</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Discount</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>100</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Freight</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>88</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ModifiedDate</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>131</int>",
+                  "      </value>",
+                  "    </item>",
+                  "  </ColumnWidths>",
+                  "  <ColumnDisplayIndex>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>0</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderParentKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>1</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>CustomerKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>2</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>EmployeeKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>3</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ProductKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>4</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShipKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>5</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShipperKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>6</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>7</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>RequiredDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>8</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ShippedDateKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>9</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>UnitPrice</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>10</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Quantity</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>11</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Discount</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>12</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>Freight</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>13</int>",
+                  "      </value>",
+                  "    </item>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>ModifiedDate</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <int>14</int>",
+                  "      </value>",
+                  "    </item>",
+                  "  </ColumnDisplayIndex>",
+                  "  <ColumnFrozen />",
+                  "  <ColumnChecked>",
+                  "    <item>",
+                  "      <key>",
+                  "        <string>OrderParentKey</string>",
+                  "      </key>",
+                  "      <value>",
+                  "        <boolean>true</boolean>",
+                  "      </value>",
+                  "    </item>",
+                  "  </ColumnChecked>",
+                  "  <ColumnFilter />",
+                  "  <SelectionFilter />",
+                  "  <FilterParameters />",
+                  "  <IsSortDescending>false</IsSortDescending>",
+                  "</TableWidgetGridSerialization>]]></AnnotationContent></Gemini>"
+                ]
+              }
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [Fact].[Orders].* FROM [Fact].[Orders] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "Orders"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "Fact"
+          },
+          {
+            "name": "TableWidgetSerialization",
+            "value": [
+              "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Gemini xmlns=\"TableWidgetSerialization\"><AnnotationContent><![CDATA[<?xml version=\"1.0\"?>",
+              "<TableWidgetGridSerialization xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">",
+              "  <ColumnSuggestedType />",
+              "  <ColumnFormat />",
+              "  <ColumnAccuracy />",
+              "  <ColumnCurrencySymbol />",
+              "  <ColumnPositivePattern />",
+              "  <ColumnNegativePattern />",
+              "  <ColumnWidths>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>105</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderParentKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>150</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>CustomerKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>132</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>EmployeeKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>133</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ProductKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>118</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShipKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>95</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShipperKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>118</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>137</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>RequiredDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>159</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShippedDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>153</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>UnitPrice</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>102</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Quantity</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>99</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Discount</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>100</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Freight</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>88</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ModifiedDate</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>131</int>",
+              "      </value>",
+              "    </item>",
+              "  </ColumnWidths>",
+              "  <ColumnDisplayIndex>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>0</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderParentKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>1</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>CustomerKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>2</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>EmployeeKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>3</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ProductKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>4</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShipKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>5</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShipperKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>6</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>7</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>RequiredDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>8</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ShippedDateKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>9</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>UnitPrice</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>10</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Quantity</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>11</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Discount</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>12</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>Freight</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>13</int>",
+              "      </value>",
+              "    </item>",
+              "    <item>",
+              "      <key>",
+              "        <string>ModifiedDate</string>",
+              "      </key>",
+              "      <value>",
+              "        <int>14</int>",
+              "      </value>",
+              "    </item>",
+              "  </ColumnDisplayIndex>",
+              "  <ColumnFrozen />",
+              "  <ColumnChecked>",
+              "    <item>",
+              "      <key>",
+              "        <string>OrderParentKey</string>",
+              "      </key>",
+              "      <value>",
+              "        <boolean>true</boolean>",
+              "      </value>",
+              "    </item>",
+              "  </ColumnChecked>",
+              "  <ColumnFilter />",
+              "  <SelectionFilter />",
+              "  <FilterParameters />",
+              "  <IsSortDescending>false</IsSortDescending>",
+              "</TableWidgetGridSerialization>]]></AnnotationContent></Gemini>"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Measure",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Value",
+            "dataType": "string",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "sourceColumn": "[Value]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "{\"\"}"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total profit",
+            "expression": "  SUMX(Orders, ( Orders[UnitPrice] * Orders[Quantity] ) - ( Orders[Discount] * Orders[UnitPrice] * Orders[Quantity] ) - Orders[Freight])"
+          },
+          {
+            "name": "Total profit without discount",
+            "expression": " SUMX(Orders, ( Orders[UnitPrice] * Orders[Quantity] ) - Orders[Freight] )"
+          },
+          {
+            "name": "Total discount",
+            "expression": " SUMX(Orders, ( Orders[Discount] * Orders[UnitPrice] * Orders[Quantity] ))"
+          },
+          {
+            "name": "Total freight",
+            "expression": " SUM(Orders[Freight])"
+          },
+          {
+            "name": "Total stock",
+            "expression": " CALCULATE(SUM(Products[UnitsInStock]), Products[Status] = True)"
+          },
+          {
+            "name": "Average profit",
+            "expression": " AVERAGEX(Orders, ( Orders[UnitPrice] * Orders[Quantity] ) - ( Orders[Discount] * Orders[UnitPrice] * Orders[Quantity] ) - Orders[Freight])"
+          },
+          {
+            "name": "Average profit without discount",
+            "expression": " AVERAGEX(Orders, ( Orders[UnitPrice] * Orders[Quantity] ) - Orders[Freight] )"
+          },
+          {
+            "name": "Average discount",
+            "expression": " AVERAGEX(Orders, ( Orders[Discount] * Orders[UnitPrice] * Orders[Quantity] ))"
+          },
+          {
+            "name": "Average freight",
+            "expression": " AVERAGE(Orders[Freight])"
+          },
+          {
+            "name": "Top 1 category sale",
+            "expression": " SUMX (TOPN (1,Categories,Categories[CategoryName],ASC),[Total profit])"
+          },
+          {
+            "name": "Top 1 product sale",
+            "expression": " CALCULATE(SUMX (TOPN (1,Products,Products[ProductName],ASC),[Total profit]), Products[Status] = True)"
+          },
+          {
+            "name": "Count of customers",
+            "expression": " DISTINCTCOUNT(Customers[CustomerKey])"
+          },
+          {
+            "name": "Count of products",
+            "expression": " CALCULATE(DISTINCTCOUNT(Products[ProductKey]), Products[Status] == True)"
+          },
+          {
+            "name": "Count of employees",
+            "expression": " DISTINCTCOUNT(Employees[EmployeeKey])"
+          },
+          {
+            "name": "Count of categories",
+            "expression": " DISTINCTCOUNT(Categories[CategoryKey])"
+          },
+          {
+            "name": "Count of orders",
+            "expression": " DISTINCTCOUNT(Orders[OrderParentKey])"
+          },
+          {
+            "name": "Top 1 customer sale",
+            "expression": " SUMX(TOPN (1,Customers,Customers[CompanyName],ASC),[Total profit])"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "00a90582-f510-4bdf-b264-2a99479bfdde",
+        "fromTable": "Orders",
+        "fromColumn": "RequiredDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "138aaa21-c4d1-4eb0-b3a9-6581ee4f9d25",
+        "fromTable": "Orders",
+        "fromColumn": "ShippedDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "24e12685-9a61-49de-b2c1-b99c57dbea25",
+        "fromTable": "EmployeeTerritories",
+        "fromColumn": "EmployeeKey",
+        "toTable": "Employees",
+        "toColumn": "EmployeeKey"
+      },
+      {
+        "name": "b1f901be-7ef8-49a4-96ce-85233f3023dd",
+        "fromTable": "EmployeeTerritories",
+        "fromColumn": "TerritoryKey",
+        "toTable": "Territories",
+        "toColumn": "TerritoryKey"
+      },
+      {
+        "name": "638c801d-ac13-4509-903d-fabd4830cc7e",
+        "fromTable": "Products",
+        "fromColumn": "CategoryKey",
+        "toTable": "Categories",
+        "toColumn": "CategoryKey"
+      },
+      {
+        "name": "bdd663c4-42e8-437c-8e7d-97bb2bcbd604",
+        "fromTable": "Products",
+        "fromColumn": "SupplierKey",
+        "toTable": "Suppliers",
+        "toColumn": "SupplierKey"
+      },
+      {
+        "name": "5927e192-61b5-43b4-9047-28803048a44c",
+        "fromTable": "Territories",
+        "fromColumn": "RegionKey",
+        "toTable": "Regions",
+        "toColumn": "RegionKey"
+      },
+      {
+        "name": "f4a19d08-b38d-4f7a-8b5e-550da6a19b26",
+        "fromTable": "Orders",
+        "fromColumn": "CustomerKey",
+        "toTable": "Customers",
+        "toColumn": "CustomerKey"
+      },
+      {
+        "name": "a5ce9282-7008-449c-8dab-a2c12d70b0e7",
+        "fromTable": "Orders",
+        "fromColumn": "OrderDateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "49b00d83-8a5b-4c5b-abbe-f3dfbc249b00",
+        "fromTable": "Orders",
+        "fromColumn": "EmployeeKey",
+        "toTable": "Employees",
+        "toColumn": "EmployeeKey"
+      },
+      {
+        "name": "65bb36e6-7035-4dc2-80fd-7e4d790b4850",
+        "fromTable": "Orders",
+        "fromColumn": "ProductKey",
+        "toTable": "Products",
+        "toColumn": "ProductKey"
+      },
+      {
+        "name": "b4990cdd-b387-49c5-9a27-2a5824738d91",
+        "fromTable": "Orders",
+        "fromColumn": "ShipKey",
+        "toTable": "Ship",
+        "toColumn": "ShipKey"
+      },
+      {
+        "name": "470024e1-66b0-4a79-bf5c-f40293d0508e",
+        "fromTable": "Orders",
+        "fromColumn": "ShipperKey",
+        "toTable": "Shippers",
+        "toColumn": "ShipperKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  }
+}
