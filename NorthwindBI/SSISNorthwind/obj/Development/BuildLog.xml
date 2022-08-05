@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>SSISNorthwind</Name>
-    <LastWriteTime>2022-07-28T19:13:21.1836703Z</LastWriteTime>
+    <LastWriteTime>2022-08-05T07:12:48.8174397Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -13,7 +13,7 @@
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>ODSToDW.dtsx</Name>
-      <LastWriteTime>2022-08-01T11:37:52.5096095Z</LastWriteTime>
+      <LastWriteTime>2022-08-05T07:12:41.5785517Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

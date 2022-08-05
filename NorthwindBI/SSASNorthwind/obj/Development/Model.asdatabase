@@ -182,44 +182,56 @@
             "name": "DateKey",
             "dataType": "int64",
             "sourceColumn": "DateKey",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "FullDateKey",
             "dataType": "dateTime",
             "sourceColumn": "FullDateKey",
-            "formatString": "General Date",
-            "sourceProviderType": "DBDate"
+            "formatString": "d.MM.yyyy",
+            "sourceProviderType": "DBDate",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"DateTimeCustom\"><DateTimes><DateTime LCID=\"1055\" Group=\"ShortDate\" FormatString=\"d.MM.yyyy\" /></DateTimes></Format>"
+              }
+            ]
           },
           {
             "name": "DayNumberOfMonth",
             "dataType": "int64",
             "sourceColumn": "DayNumberOfMonth",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "DayNumberOfWeek",
             "dataType": "int64",
             "sourceColumn": "DayNumberOfWeek",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "DayNumberOfYear",
             "dataType": "int64",
             "sourceColumn": "DayNumberOfYear",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "MonthNumber",
             "dataType": "int64",
             "sourceColumn": "MonthNumber",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "YearNumber",
             "dataType": "int64",
             "sourceColumn": "YearNumber",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           }
         ],
         "partitions": [
@@ -931,7 +943,8 @@
             "name": "OrderKey",
             "dataType": "int64",
             "sourceColumn": "OrderKey",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Integer",
+            "summarizeBy": "none"
           },
           {
             "name": "CustomerKey",
@@ -1695,6 +1708,42 @@
           {
             "name": "Top 1 customer sale",
             "expression": " SUMX(TOPN (1,Customers,Customers[CompanyName],ASC),[Total profit])"
+          },
+          {
+            "name": "Selected Cateogry",
+            "expression": " SELECTEDVALUE(Categories[CategoryName])"
+          },
+          {
+            "name": "Selected Cateogry Profit Performance",
+            "expression": " \"Profit Performance for \" & SELECTEDVALUE(Categories[CategoryName])"
+          },
+          {
+            "name": "Selected Product",
+            "expression": " SELECTEDVALUE(Products[ProductName])"
+          },
+          {
+            "name": "Selected Product Profit Performance",
+            "expression": " \"Profit Performance for \" & SELECTEDVALUE(Products[ProductName])"
+          },
+          {
+            "name": "Selected Employee",
+            "expression": " SELECTEDVALUE(Employees[FullName])"
+          },
+          {
+            "name": "Selected Employee Profit Performance",
+            "expression": " \"Profit Performance for \" & SELECTEDVALUE(Employees[FullName])"
+          },
+          {
+            "name": "Selected Customer",
+            "expression": " SELECTEDVALUE(Customers[CompanyName])"
+          },
+          {
+            "name": "Selected Customer Profit Performance",
+            "expression": " \"Profit Performance for \" & SELECTEDVALUE(Customers[CompanyName])"
+          },
+          {
+            "name": "Selected Year Profit Performance",
+            "expression": " CONVERT(SELECTEDVALUE('Date'[YearNumber]),STRING)"
           }
         ]
       }
