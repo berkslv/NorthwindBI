@@ -8,7 +8,7 @@ Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sonra iş zek
   <source src="./img/ReportShowcase.mp4" type="video/mp4">
 </video>
 
-[![Alt image](https://raw.githubusercontent.com/berkslv/NorthwindBI/main/img/Thumbnail.png)](https://www.youtube.com/watch?v=W84oOC8XDuM)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/W84oOC8XDuM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Süreç
 
