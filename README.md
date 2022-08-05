@@ -5,13 +5,11 @@ Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sonra iş zek
 Üç ana aşamada projeyi tamamlayacağız. İlk olarak Data warehouse ve ODS katmanlarının şemaları oluşturulur, her katmanın oluşturma scriptleri ana dizinde bulunabilir, ikinci adımda bu şemalar kaynak veritabanımızdan ETL süreci ile doldurulur. Son adımda ise veri ambarımıza bağladığımız SSAS ve ona bağladığımız Power BI araçlarımız ile rapor oluşturulur. Adım adım projenin geliştirilme aşamaları aşağıda yer almaktadır.
 
 
-<div align="left">
-      <a href="https://www.youtube.com/watch?v=W84oOC8XDuM">
-         <img src="https://raw.githubusercontent.com/berkslv/NorthwindBI/main/img/Thumbnail.png" style="width:100%;">
-      </a>
-</div>
+[![Thumbnail](https://raw.githubusercontent.com/berkslv/NorthwindBI/main/img/Thumbnail.jpg)](https://www.youtube.com/watch?v=W84oOC8XDuM)
 
 # Süreç
+
+![Schema](https://raw.githubusercontent.com/berkslv/NorthwindBI/main/img/Schema.jpg)
 
 ## Northiwnd veritabanı oluşturulur.
 
