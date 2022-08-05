@@ -8,6 +8,8 @@ Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sonra iş zek
   <source src="./img/ReportShowcase.mp4" type="video/mp4">
 </video>
 
+[![Alt image](https://raw.githubusercontent.com/berkslv/NorthwindBI/main/img/Thumbnail.png)](https://www.youtube.com/watch?v=W84oOC8XDuM)
+
 # Süreç
 
 ## Northiwnd veritabanı oluşturulur.
