@@ -7,12 +7,12 @@
   DTS:CreatorName="DESKTOP-Q3M17BJ\berks_9484iah"
   DTS:DTSID="{3DEAD396-4E17-4CFE-9965-F99E23C1EC9F}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="16.0.521.0"
+  DTS:LastModifiedProductVersion="16.0.5035.3"
   DTS:LocaleID="1055"
   DTS:ObjectName="ODSToDW"
   DTS:PackageType="5"
-  DTS:VersionBuild="47"
-  DTS:VersionGUID="{AFBF05EE-13A0-4195-AE57-EEE2C753AE84}">
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{E9AD0D74-D8F1-4DF5-9A8B-CF2AAB2647C6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -8194,13 +8194,6 @@ where [refTable].[OrderKey] = ?</property>
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Fact Orders\Insert &amp; Update\Multicast.Outputs[Multicast Output 2]"
-                      deleteOutputOnPathDetached="true"
-                      name="Multicast Output 2"
-                      synchronousInputId="Package\Fact Orders\Insert &amp; Update\Multicast.Inputs[Multicast Input 1]">
-                      <externalMetadataColumns />
-                    </output>
-                    <output
                       refId="Package\Fact Orders\Insert &amp; Update\Multicast.Outputs[Multicast Output 1]"
                       deleteOutputOnPathDetached="true"
                       name="Multicast Output 1"
@@ -8212,6 +8205,13 @@ where [refTable].[OrderKey] = ?</property>
                       dangling="true"
                       deleteOutputOnPathDetached="true"
                       name="Multicast Output 3"
+                      synchronousInputId="Package\Fact Orders\Insert &amp; Update\Multicast.Inputs[Multicast Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Fact Orders\Insert &amp; Update\Multicast.Outputs[Multicast Output 2]"
+                      deleteOutputOnPathDetached="true"
+                      name="Multicast Output 2"
                       synchronousInputId="Package\Fact Orders\Insert &amp; Update\Multicast.Inputs[Multicast Input 1]">
                       <externalMetadataColumns />
                     </output>
@@ -8818,14 +8818,14 @@ ELSE
                   startId="Package\Fact Orders\Insert &amp; Update\Multicast 2.Outputs[Multicast Output 1]" />
                 <path
                   refId="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 2]"
-                  endId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input]"
-                  name="Multicast Output 2"
-                  startId="Package\Fact Orders\Insert &amp; Update\Multicast.Outputs[Multicast Output 2]" />
-                <path
-                  refId="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
                   endId="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete.Inputs[OLE DB Destination Input]"
                   name="Multicast Output 2"
                   startId="Package\Fact Orders\Insert &amp; Update\Multicast 2.Outputs[Multicast Output 2]" />
+                <path
+                  refId="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
+                  endId="Package\Fact Orders\Insert &amp; Update\Insert Orders.Inputs[OLE DB Destination Input]"
+                  name="Multicast Output 2"
+                  startId="Package\Fact Orders\Insert &amp; Update\Multicast.Outputs[Multicast Output 2]" />
                 <path
                   refId="Package\Fact Orders\Insert &amp; Update.Paths[OLE DB Command Output]"
                   endId="Package\Fact Orders\Insert &amp; Update\Multicast 2.Inputs[Multicast Input 1]"
@@ -16218,6 +16218,17 @@ ELSE
           Id="Package\Fact Orders"
           TopLeft="359.374994644896,994.700005137324" />
         <NodeLayout
+          Size="237.333333333334,42.6666666666667"
+          Id="Package\Process Cube\Analysis Services Processing Task"
+          TopLeft="8.26189866839451,17.9047506139388" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="270,116"
+          Size="270,158.666666666667"
+          Id="Package\Process Cube"
+          TopLeft="368.749994505197,1265.04761127688" />
+        <NodeLayout
           Size="109.333333333334,42.6666666666667"
           Id="Package\Products SCD\Delete"
           TopLeft="83.3645813659146,107.520828001325" />
@@ -16600,17 +16611,6 @@ ELSE
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="237.333333333334,42.6666666666667"
-          Id="Package\Process Cube\Analysis Services Processing Task"
-          TopLeft="8.26189866839451,17.9047506139388" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="270,115.333333333334"
-          Size="270,158.666666666667"
-          Id="Package\Process Cube"
-          TopLeft="368.749994505197,1265.04761127688" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 9]"
           TopLeft="503.39582790838,1229.36667180399">
@@ -16636,6 +16636,10 @@ ELSE
       </GraphLayout>
     </LayoutInfo>
   </Package>
+  <ConnectionManager
+    design-time-name="Package.ConnectionManagers[localhost.SSASNorthwind]">
+    <ProjectReferenceName></ProjectReferenceName>
+  </ConnectionManager>
   <TaskHost
     design-time-name="Package\Categories\Delete">
     <LayoutInfo>
@@ -17824,7 +17828,7 @@ ELSE
         <NodeLayout
           Size="142.666666666667,42.6666666666667"
           Id="Package\Fact Orders\Insert &amp; Update\Insert Orders"
-          TopLeft="184.999997243285,206.699996303916" />
+          TopLeft="184.374997271225,206.699996303916" />
         <NodeLayout
           Size="201.333333333334,42.6666666666667"
           Id="Package\Fact Orders\Insert &amp; Update\Insert Orders After Delete"
@@ -17884,9 +17888,7 @@ ELSE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -17933,7 +17935,7 @@ ELSE
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,29.4203106229007,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,29.4203106229008,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -17956,9 +17958,7 @@ ELSE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -17980,13 +17980,11 @@ ELSE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 2]"
           TopLeft="478.902771919759,329.383331043621">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -18016,45 +18014,7 @@ ELSE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 2]"
-          TopLeft="212.222222222223,126">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="44.1111083543961,80.699996303916"
-              Start="0,0"
-              End="44.1111083543961,73.199996303916">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.910193720469" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,28.910193720469"
-                    Point2="0,32.910193720469"
-                    Point3="4,32.910193720469" />
-                  <mssgle:LineSegment
-                    End="40.1111083543961,32.910193720469" />
-                  <mssgle:CubicBezierSegment
-                    Point1="40.1111083543961,32.910193720469"
-                    Point2="44.1111083543961,32.910193720469"
-                    Point3="44.1111083543961,36.910193720469" />
-                  <mssgle:LineSegment
-                    End="44.1111083543961,73.199996303916" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -18088,9 +18048,41 @@ ELSE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Fact Orders\Insert &amp; Update.Paths[Multicast Output 21]"
+          TopLeft="212.222222222223,126">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.4861083823355,80.699996303916"
+              Start="0,0"
+              End="43.4861083823355,73.199996303916">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.910193720469" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.910193720469"
+                    Point2="0,32.910193720469"
+                    Point3="4,32.910193720469" />
+                  <mssgle:LineSegment
+                    End="39.4861083823355,32.910193720469" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.4861083823355,32.910193720469"
+                    Point2="43.4861083823355,32.910193720469"
+                    Point3="43.4861083823355,36.910193720469" />
+                  <mssgle:LineSegment
+                    End="43.4861083823355,73.199996303916" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -19534,9 +19526,5 @@ ELSE
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <ConnectionManager
-    design-time-name="Package.ConnectionManagers[localhost.SSASNorthwind]">
-    <ProjectReferenceName></ProjectReferenceName>
-  </ConnectionManager>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>

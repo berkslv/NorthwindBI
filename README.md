@@ -1,6 +1,6 @@
 # Northwind BI
 
-Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sonra iş zekası süreçlerini uygulamak için geliştirilmiştir. Araç seti olarak Microsoftun araçları olan SQL Server, SSIS, SSAS, SSRS ve Power BI kullanılır.
+Bu proje içerisinde, Northwind veri tabanı kullanılarak baştan sona iş zekası süreçlerini uygulamak için geliştirilmiştir. Araç seti olarak Microsoftun araçları olan SQL Server, SSIS, SSAS ve Power BI kullanılır.
 
 Üç ana aşamada projeyi tamamlayacağız. İlk olarak Data warehouse ve ODS katmanlarının şemaları oluşturulur, her katmanın oluşturma scriptleri ana dizinde bulunabilir, ikinci adımda bu şemalar kaynak veritabanımızdan ETL süreci ile doldurulur. Son adımda ise veri ambarımıza bağladığımız SSAS ve ona bağladığımız Power BI araçlarımız ile rapor oluşturulur. Adım adım projenin geliştirilme aşamaları aşağıda yer almaktadır.
 

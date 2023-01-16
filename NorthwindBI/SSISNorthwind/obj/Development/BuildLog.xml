@@ -1,19 +1,24 @@
 <?xml version="1.0"?>
-<BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>SSISNorthwind</Name>
-    <LastWriteTime>2022-08-05T07:12:48.8174397Z</LastWriteTime>
+    <LastWriteTime>2023-01-16T11:09:12.6788033Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
       <Name>SourceToODS.dtsx</Name>
-      <LastWriteTime>2022-07-28T19:12:52.2301578Z</LastWriteTime>
+      <LastWriteTime>2023-01-16T09:05:38.6470164Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>ODSToDW.dtsx</Name>
-      <LastWriteTime>2022-08-05T07:12:41.5785517Z</LastWriteTime>
+      <LastWriteTime>2023-01-16T11:16:40.6831358Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>TruncateAll.dtsx</Name>
+      <LastWriteTime>2023-01-16T11:09:12.6309299Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/16/2023 1:54:56 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-BJO9MUP"
+  DTS:CreatorName="DESKTOP-BJO9MUP\berks"
+  DTS:DTSID="{DDCA5508-539D-4846-84DE-13BAD8F4414F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5035.3"
+  DTS:LocaleID="1055"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{73DF9722-6E90-4342-9684-BE19DEFE510C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{708379A1-01ED-4702-9F16-C4706E69B3AB}"
+      DTS:ObjectName="DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=NorthwindDW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ODS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D5E2CF16-D3BF-4CA3-8EA2-631A6B41A2A9}"
+      DTS:ObjectName="ODS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=NorthwindODS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Truncate DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C5FE8EA2-D3BB-4A5D-A0E2-5830EF9061BB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate DW"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{708379A1-01ED-4702-9F16-C4706E69B3AB}"
+          SQLTask:SqlStatementSource="USE [NorthwindDW]&#xA;GO&#xA;&#xA;DELETE FROM [Dim].[Products]&#xA;GO&#xA;DELETE FROM [Dim].[Categories]&#xA;GO&#xA;DELETE FROM [Dim].[Customers]&#xA;GO&#xA;DELETE FROM [Dim].[Employees]&#xA;GO&#xA;DELETE FROM [Dim].[EmployeeTerritories]&#xA;GO&#xA;DELETE FROM [Dim].[Regions]&#xA;GO&#xA;DELETE FROM [Dim].[Ship]&#xA;GO&#xA;DELETE FROM [Dim].[Shippers]&#xA;GO&#xA;DELETE FROM [Dim].[Suppliers]&#xA;GO&#xA;DELETE FROM [Dim].[Territories]&#xA;GO&#xA;DELETE FROM [Dim].[Territories]&#xA;GO&#xA;DELETE FROM [Fact].[Orders]&#xA;GO&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate ODS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{079EA80C-BC15-43D2-B478-99D2138C6DD4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate ODS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{708379A1-01ED-4702-9F16-C4706E69B3AB}"
+          SQLTask:SqlStatementSource="USE [NorthwindODS]&#xA;GO&#xA;&#xA;DELETE FROM [dbo].[Categories]&#xA;GO&#xA;DELETE FROM [dbo].[Customers]&#xA;GO&#xA;DELETE FROM [dbo].[Employees]&#xA;GO&#xA;DELETE FROM [dbo].[EmployeeTerritories]&#xA;GO&#xA;DELETE FROM [dbo].[Order Details]&#xA;GO&#xA;DELETE FROM [dbo].[Orders]&#xA;GO&#xA;DELETE FROM [dbo].[Products]&#xA;GO&#xA;DELETE FROM [dbo].[Region]&#xA;GO&#xA;DELETE FROM [dbo].[Shippers]&#xA;GO&#xA;DELETE FROM [dbo].[Suppliers]&#xA;GO&#xA;DELETE FROM [dbo].[Territories]&#xA;GO&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6DB84BD5-8A84-4BDC-B8A6-6D2CA880DAC5}"
+      DTS:From="Package\Truncate ODS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Truncate DW" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\Truncate ODS"
+          TopLeft="35.6249984074384,31.8499984812737" />
+        <NodeLayout
+          Size="141.333333333334,42.6666666666667"
+          Id="Package\Truncate DW"
+          TopLeft="32.4999985471368,102.699995102883" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="105.729165143954,74.5166651479404">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.1833299549422"
+              Start="0,0"
+              End="0,20.6833299549422">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.6833299549422" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
